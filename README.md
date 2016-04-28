@@ -1,2 +1,6 @@
-# backframe
-Rails bindings for Reframe
+# Backframe
+
+## Development
+
+    bundle install
+    bundle exec rake spec
