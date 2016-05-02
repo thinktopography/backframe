@@ -1,5 +1,5 @@
 module Backframe
-  module API
+  module ActsAsAPI
     module Page
       DEFAULT_PAGE = 1
       DEFAULT_PER_PAGE = 100
@@ -35,85 +35,67 @@ module Backframe
         args[:page] ||= DEFAULT_PAGE
         args[:per_page] ||= DEFAULT_PER_PAGE
 
-
-        collection = collection.page(args[:page]).per(args[:per_page])
-        fields = (args.key?(:fields)) ? args[:fields].split(',').map(&:to_sym) : serializer._attributes
+        collection = (params[:format] == 'json') ? collection.page(args[:page]).per(args[:per_page]) : collection.all
 
         respond_to do |format|
           format.json {
+            fields = (args.key?(:fields)) ? args[:fields].split(',').map(&:to_sym) : serializer._attributes
             render json: collection,
                    content_type: 'application/json',
-                   adapter: Backframe::API::Adapter,
+                   adapter: Backframe::ActsAsAPI::Adapter,
                    fields: fields,
-                   links: pagination_links(collection, args[:per_page], args[:page])
+                   links: pagination_links(collection, args[:per_page], args[:page]),
+                   status: 200
           }
           format.csv {
-            content_type = (args.key?(:plain)) ? 'text/plain' : 'text/csv'
+            fields = expand_fields(collection, serializer, fields)
+            content_type = (args.key?(:download) && args[:download] == 'false') ? 'text/plain' : 'text/csv'
             render :text => collection_to_csv(collection, serializer, fields, ","), :content_type => content_type, :status => 200
           }
           format.tsv {
-            content_type = (args.key?(:plain)) ? 'text/plain' : 'text/tab-separated-values'
+            fields = expand_fields(collection, serializer, fields)
+            content_type = (args.key?(:download) && args[:download] == 'false') ? 'text/plain' : 'text/tab-separated-values'
             render :text => collection_to_csv(collection, serializer, fields, "\t"), :content_type => content_type, :status => 200
           }
-          format.xls {
-            content_type = (args.key?(:plain)) ? 'text/xml' : 'application/xls'
-            render :text => collection_to_xls(collection, serializer, fields), :content_type => content_type, :status => 200
-          }
           format.xlsx {
-            content_type = (args.key?(:plain)) ? 'text/xml' : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-            render :text => collection_to_xls(collection, serializer, fields), :content_type => content_type, :status => 200
+            fields = expand_fields(collection, serializer, fields)
+            render :text => collection_to_xls(collection, serializer, fields), :content_type => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', :status => 200
           }
         end
       end
 
-      def collection_to_csv(collection, serializer, fields, separator)
-        rows = []
-        line = []
-        headers = []
-        collection.each do |record|
-          headers = []
-          line = []
-          serialized = OpenStruct.new(ActiveModel::SerializableResource.new(record).as_json)
-          fields.each do |fullkey|
-            value = serialized
-            fullkey.to_s.split(".").each do |key|
-              if value.respond_to?(key)
-                value = value.send(key)
-                if value.is_a?(Time)
-                  value = value.strftime("%F %T")
-                elsif value.is_a?(Date)
-                  value = value.strftime("%F")
-                elsif value.is_a?(Hash)
-                  value = OpenStruct.new(value)
-                else
-                  value = value.to_s
-                end
-              else
-                value = nil
-              end
-            end
-            if !value.is_a?(OpenStruct)
-              headers << fullkey
-              line << value
-            end
-          end
-          rows << line.join(separator)
+      def expand_fields(collection, serializer, fields)
+        if fields.present?
+          fields.split(',').map(&:to_s)
+        else
+          serialized = serializer.new(collection.first).attributes
+          flatten_hash_keys(serialized)
         end
-        rows.unshift(headers.join(separator))
-        rows.join("\n")
       end
 
-      def collection_to_xls(collection, serializer, fields)
-        filename = SecureRandom.hex(32).to_s.upcase[0,16]
-        workbook = WriteXLSX.new(filename)
-        worksheet = workbook.add_worksheet
-        row = 0
-        col = 0
-        fields.each_with_index do |key, col|
-          worksheet.write(row, col, key)
+      def flatten_hash_keys(hash, prefix = '')
+        keys = []
+        hash.each do |key, value|
+          fullkey =  (!prefix.empty?) ? "#{prefix}.#{key}" : key
+          if value.is_a?(Hash)
+            keys.concat(flatten_hash_keys(value, fullkey))
+          else
+            keys << fullkey.to_s
+          end
         end
-        collection.all.each_with_index do |record, index|
-          row = index + 1
+        keys
+      end
+
+      def collection_to_array(collection, serializer, fields)
+        rows = []
+        cols = []
+        row = []
+        fields.each do |key|
+          row << key
+        end
+        rows << row
+        collection.all.each do |record|
+          row = []
           serialized = serializer.new(record).attributes
           fields.each_with_index do |fullkey, col|
             value = serialized
@@ -133,9 +115,33 @@ module Backframe
               value = 'true'
             elsif value.is_a?(FalseClass)
               value = 'false'
+            elsif value.is_a?(NilClass)
+              value = ''
             end
-            value = (!value.is_a?(String)) ? '' : value
-            worksheet.write(row, col, value)
+            row << "#{value}"
+          end
+          rows << row
+        end
+        rows
+      end
+
+      def collection_to_csv(collection, serializer, fields, separator)
+        output = []
+        rows = collection_to_array(collection, serializer, fields)
+        rows.each do |row|
+          output << row.join(separator)
+        end
+        output.join("\n")
+      end
+
+      def collection_to_xls(collection, serializer, fields)
+        filename = SecureRandom.hex(32).to_s.upcase[0,16]
+        workbook = WriteXLSX.new(filename)
+        worksheet = workbook.add_worksheet
+        rows = collection_to_array(collection, serializer, fields)
+        rows.each_with_index do |row, i|
+          row.each_with_index do |col, j|
+            worksheet.write(i, j, col)
           end
         end
         workbook.close

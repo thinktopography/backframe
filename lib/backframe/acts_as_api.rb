@@ -2,13 +2,13 @@ require 'active_support'
 require 'active_support/inflector'
 require 'active_model_serializers'
 
-require 'backframe/api/adapter'
-require 'backframe/api/errors'
-require 'backframe/api/headers'
-require 'backframe/api/page'
+require 'backframe/acts_as_api/adapter'
+require 'backframe/acts_as_api/errors'
+require 'backframe/acts_as_api/headers'
+require 'backframe/acts_as_api/page'
 
 module Backframe
-  module API
+  module ActsAsAPI
     extend ActiveSupport::Concern
 
     class_methods do

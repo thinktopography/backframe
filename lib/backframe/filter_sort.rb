@@ -8,7 +8,7 @@ module Backframe
           conditions = []
           params = []
           fields.each do |field|
-            conditions << "LOWER(#{field}::VARCHAR) LIKE ?"
+            conditions << "LOWER(\"#{self.table_name}\".\"#{field}\"::VARCHAR) LIKE ?"
             params << '%'+filters[:q].downcase+'%'
           end
           args = params.unshift(conditions.join(' OR '))
@@ -20,15 +20,23 @@ module Backframe
       def filter_range(relation, filters, start_date, end_date = nil)
         end_date ||= start_date
         if filters.key?(:start_date) && filters.key?(:end_date)
-          relation = relation.where("#{self.table_name}.#{start_date} <= ? AND #{self.table_name}.#{end_date} >= ?", filters[:end_date], filters[:start_date])
+          relation = relation.where("\"#{self.table_name}\".\"#{start_date}\" <= ? AND \"#{self.table_name}\".\"#{end_date}\" >= ?", filters[:end_date], filters[:start_date])
         end
         relation
       end
 
       def filter_boolean(relation, filters, field)
         if filters.key?(field)
-          relation = relation.where(:field => true) if filters[field] == 1
-          relation = relation.where(:field => false) if filters[field] == 0
+          relation = relation.where("\"#{self.table_name}\".\"#{field}\" = ?", true) if ["1","true"].include?(filters[field].to_s)
+          relation = relation.where("\"#{self.table_name}\".\"#{field}\" = ?", false) if ["0","false"].include?(filters[field].to_s)
+        end
+        relation
+      end
+
+      def filter_status(relation, filters, field, value)
+        if filters.key?(value)
+          relation = relation.where("\"#{self.table_name}\".\"#{field}\" = ?", value) if ["1","true"].include?(filters[value].to_s)
+          relation = relation.where("\"#{self.table_name}\".\"#{field}\" = ?", value) if ["0","false"].include?(filters[value].to_s)
         end
         relation
       end

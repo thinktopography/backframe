@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe 'Backframe::Resource', type: :controller do
+describe 'Backframe::ActsAsResource', type: :controller do
   controller do
-    include Backframe::API
-    include Backframe::Resource
+    include Backframe::ActsAsAPI
+    include Backframe::ActsAsResource
 
     acts_as_api
     acts_as_resource 'Example', allowed: [:a, :b, :c]

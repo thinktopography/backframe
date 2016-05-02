@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe 'Backframe::API', type: :controller do
+describe 'Backframe::ActsAsAPI', type: :controller do
   controller do
-    include Backframe::API
+    include Backframe::ActsAsAPI
     acts_as_api
 
     def base_api_url
@@ -13,7 +13,7 @@ describe 'Backframe::API', type: :controller do
   describe 'error handlng' do
     before { get :index }
 
-    context 'resource not found' do
+    context 'acts_as_resource not found' do
       controller do
         def index
           raise ActiveRecord::RecordNotFound

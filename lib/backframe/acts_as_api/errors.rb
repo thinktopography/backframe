@@ -1,5 +1,5 @@
 module Backframe
-  module API
+  module ActsAsAPI
     module Errors
       def unauthenticated_request
         error_response(:unauthenticated, 401)
@@ -24,7 +24,7 @@ module Backframe
 
         result = {
           error: {
-            message: I18n.t("backframe.api.#{code}", method: request.method),
+            message: I18n.t("backframe.acts_as_api.#{code}", method: request.method),
             status: status
           }
         }
@@ -34,7 +34,7 @@ module Backframe
 
       def resource_error_response(resource, status = 500)
         result = {
-          message: I18n.t('backframe.api.resource_error', request: request),
+          message: I18n.t('backframe.acts_as_api.resource_error', request: request),
           errors: resource.errors,
           status: status
         }

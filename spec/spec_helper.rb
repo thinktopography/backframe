@@ -45,7 +45,7 @@ module Helpers
   end
 
   def serialize(value, opts = {})
-    opts[:adapter] ||= Backframe::API::Adapter
+    opts[:adapter] ||= Backframe::ActsAsAPI::Adapter
     ActiveModel::SerializableResource.new(value, opts).as_json
   end
 end

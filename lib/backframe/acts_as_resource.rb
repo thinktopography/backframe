@@ -1,9 +1,9 @@
 require 'active_support'
 
-require 'backframe/resource/actions'
+require 'backframe/acts_as_resource/actions'
 
 module Backframe
-  module Resource
+  module ActsAsResource
     extend ActiveSupport::Concern
 
     class_methods do

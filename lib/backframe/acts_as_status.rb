@@ -13,19 +13,29 @@ module Backframe
         field = args[0]
         arguments = args[1]
 
-        if arguments.key?(:default)
-          after_initialize :init_status, :if => Proc.new { |d| d.new_record? }
-        end
 
         if arguments.key?(:required)
+
           validates_presence_of field
+
+        end
+
+        if arguments.key?(:default)
+
+          after_initialize "init_#{field}_status".to_sym, :if => Proc.new { |d| d.new_record? }
+
+          class_eval <<-EOV
+            def init_#{field}_status
+              self.#{field} ||= '#{arguments[:default]}'
+            end
+          EOV
+
         end
 
         if arguments.key?(:in)
+
           validates_inclusion_of field, :in => arguments[:in]
-        end
 
-        if arguments.key?(:in)
           arguments[:in].each do |status|
             class_eval <<-EOV
               scope :#{status}, -> { where(:status => '#{status}') }
@@ -35,14 +45,7 @@ module Backframe
               end
             EOV
           end
-        end
 
-        if arguments.key?(:default)
-          class_eval <<-EOV
-            def init_status
-              self.#{field} ||= '#{arguments[:default]}'
-            end
-          EOV
         end
 
       end

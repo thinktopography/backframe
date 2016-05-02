@@ -1,5 +1,5 @@
 module Backframe
-  module API
+  module ActsAsAPI
     module Headers
       def set_expiration_header
         headers['Last-Modified'] = Time.now.httpdate

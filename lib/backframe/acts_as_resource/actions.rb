@@ -1,5 +1,5 @@
 module Backframe
-  module Resource
+  module ActsAsResource
     module Actions
       module Index
         def index
@@ -15,7 +15,7 @@ module Backframe
               Activity.create!(subject: current_user, text: 'created {object1}', object1: @item)
             end
 
-            render json: @item, status: 201, adapter: Backframe::API::Adapter
+            render json: @item, status: 201, adapter: Backframe::ActsAsAPI::Adapter
           else
             resource_error_response(@item, 422)
           end
@@ -24,7 +24,7 @@ module Backframe
 
       module Show
         def show
-          render json: @item, adapter: Backframe::API::Adapter
+          render json: @item, adapter: Backframe::ActsAsAPI::Adapter
         end
       end
 
@@ -51,7 +51,7 @@ module Backframe
               Activity.create!(subject: current_user, text: 'updated {object1}', object1: @item)
             end
 
-            render json: @item, adapter: Backframe::API::Adapter
+            render json: @item, adapter: Backframe::ActsAsAPI::Adapter
           else
             resource_error_response(@item, 422)
           end
@@ -66,7 +66,7 @@ module Backframe
             records = update_all_params.map(&method(:update_record))
           end
 
-          render json: records, adapter: Backframe::API::Adapter
+          render json: records, adapter: Backframe::ActsAsAPI::Adapter
         end
 
         private
