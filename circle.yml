@@ -5,4 +5,4 @@ deployment:
   production:
     branch: release
     commands:
-      - cd ~/backrame; bundle exec rake release
+      - cd ~/backframe; bundle exec rake release
