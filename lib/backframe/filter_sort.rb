@@ -36,7 +36,7 @@ module Backframe
       def filter_status(relation, filters, field, value)
         if filters.key?(value)
           relation = relation.where("\"#{self.table_name}\".\"#{field}\" = ?", value) if ["1","true"].include?(filters[value].to_s)
-          relation = relation.where("\"#{self.table_name}\".\"#{field}\" = ?", value) if ["0","false"].include?(filters[value].to_s)
+          relation = relation.where("\"#{self.table_name}\".\"#{field}\" != ?", value) if ["0","false"].include?(filters[value].to_s)
         end
         relation
       end
