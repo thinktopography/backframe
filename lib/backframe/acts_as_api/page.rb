@@ -48,17 +48,17 @@ module Backframe
                    status: 200
           }
           format.csv {
-            fields = expand_fields(collection, serializer, fields)
+            fields = expand_fields(collection, serializer,  args[:fields])
             content_type = (args.key?(:download) && args[:download] == 'false') ? 'text/plain' : 'text/csv'
             render :text => collection_to_csv(collection, serializer, fields, ","), :content_type => content_type, :status => 200
           }
           format.tsv {
-            fields = expand_fields(collection, serializer, fields)
+            fields = expand_fields(collection, serializer,  args[:fields])
             content_type = (args.key?(:download) && args[:download] == 'false') ? 'text/plain' : 'text/tab-separated-values'
             render :text => collection_to_csv(collection, serializer, fields, "\t"), :content_type => content_type, :status => 200
           }
           format.xlsx {
-            fields = expand_fields(collection, serializer, fields)
+            fields = expand_fields(collection, serializer,  args[:fields])
             render :text => collection_to_xls(collection, serializer, fields), :content_type => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', :status => 200
           }
         end
