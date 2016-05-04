@@ -12,12 +12,7 @@ module Backframe
 
         attr_accessor :password, :change_password, :set_password, :old_password, :new_password, :confirm_password, :confirm_email
 
-        has_many :activations, :dependent => :destroy
-        has_many :resets, :dependent => :destroy
-
         after_validation :set_new_password, :if => Proc.new { |u| u.new_password.present? }
-        after_create :activate
-        after_save :update_activities, :if => Proc.new { |u| u.first_name_changed? || u.last_name_changed? }
 
         validates_presence_of :first_name, :last_name, :email
         validates_uniqueness_of :email
@@ -54,14 +49,6 @@ module Backframe
             self.password_hash == BCrypt::Engine.hash_secret(password, self.password_salt)
           end
 
-          def reset
-            self.resets.create
-          end
-
-          def activate
-            self.activations.create
-          end
-
           def password=(password)
             @password = password
             self.password_salt = BCrypt::Engine.generate_salt
@@ -86,10 +73,6 @@ module Backframe
 
           def set_new_password
             self.password = self.new_password
-          end
-
-          def update_activities
-            Activity.where(:#{self.name.downcase}_id => self.id).update_all(:updated_at => Time.zone.now)
           end
 
         EOV
