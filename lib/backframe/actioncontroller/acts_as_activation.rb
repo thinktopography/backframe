@@ -1,3 +1,6 @@
+require 'active_support'
+require 'active_support/inflector'
+
 module Backframe
   module ActsAsActivation
     extend ActiveSupport::Concern
