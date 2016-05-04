@@ -1,6 +1,6 @@
 require 'active_support'
 
-require 'backframe/acts_as_resource/actions'
+require 'backframe/actioncontroller/acts_as_resource/actions'
 
 module Backframe
   module ActsAsResource

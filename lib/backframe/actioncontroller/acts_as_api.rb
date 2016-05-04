@@ -1,11 +1,13 @@
+require 'write_xlsx'
+
 require 'active_support'
 require 'active_support/inflector'
 require 'active_model_serializers'
 
-require 'backframe/acts_as_api/adapter'
-require 'backframe/acts_as_api/errors'
-require 'backframe/acts_as_api/headers'
-require 'backframe/acts_as_api/page'
+require 'backframe/actioncontroller/acts_as_api/adapter'
+require 'backframe/actioncontroller/acts_as_api/errors'
+require 'backframe/actioncontroller/acts_as_api/headers'
+require 'backframe/actioncontroller/acts_as_api/page'
 
 module Backframe
   module ActsAsAPI
