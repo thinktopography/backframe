@@ -35,7 +35,7 @@ module Backframe
             if request.patch?
               @user.set_password = true
               @user.attributes = params.require(:#{model.underscore}).permit([:new_password,:confirm_password])
-              if @user.save!
+              if @user.save
                 session.delete(:activation_id)
                 session[:#{model.underscore}_id] = @user.id
                 @activation.claim
