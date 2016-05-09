@@ -12,7 +12,11 @@ module Backframe
 
         attr_accessor :password, :change_password, :set_password, :old_password, :new_password, :confirm_password, :confirm_email
 
+        has_many :activations, :dependent => :destroy
+        has_many :resets, :dependent => :destroy
+
         after_validation :set_new_password, :if => Proc.new { |u| u.new_password.present? }
+        after_create :activate
 
         validates_presence_of :first_name, :last_name, :email
         validates_uniqueness_of :email
@@ -73,6 +77,14 @@ module Backframe
 
           def set_new_password
             self.password = self.new_password
+          end
+
+          def activate
+            self.activations.create
+          end
+
+          def reset
+            self.resets.create
           end
 
         EOV

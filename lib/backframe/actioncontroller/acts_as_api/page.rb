@@ -41,6 +41,7 @@ module Backframe
           format.json {
             fields = (args.key?(:fields)) ? args[:fields].split(',').map(&:to_sym) : serializer._attributes
             render json: collection,
+                   each_serializer: serializer,
                    content_type: 'application/json',
                    adapter: Backframe::ActsAsAPI::Adapter,
                    fields: fields,
