@@ -49,8 +49,8 @@ module Backframe
           ApplicationMailer.reset(self).deliver_now!
         elsif self.user_type == 'Customer'
           template = EmailTemplate.find_by(:code => 'password_reset')
-          email = EmailDelivery.new(:customer => self.customer, :subject => template.subject, :body => template.body)
-          email.personalize(:customer => self.customer, :reset => self)
+          email = EmailDelivery.new(:customer => self.user, :subject => template.subject, :body => template.body)
+          email.personalize(:customer => self.user, :reset => self)
           email.save
         end
       end
