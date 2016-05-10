@@ -1,5 +1,10 @@
 # encoding: utf-8
 
+require 'active_record'
+require 'active_record/version'
+require 'active_support/core_ext/module'
+require 'liquid'
+
 require 'backframe/actioncontroller/acts_as_activation'
 require 'backframe/actioncontroller/acts_as_api'
 require 'backframe/actioncontroller/acts_as_reset'
@@ -16,8 +21,6 @@ require 'backframe/models/activity'
 require 'backframe/models/activation'
 require 'backframe/models/reset'
 require 'backframe/serializers/activity_serializer'
-require 'backframe/mime'
-
 
 module Backframe
 
@@ -33,5 +36,7 @@ module Backframe
   end
 
 end
-
-require 'backframe/railtie'
+if defined? Rails
+  require 'backframe/mime'
+  require 'backframe/railtie'
+end
