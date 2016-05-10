@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Backframe
   class Railtie < ::Rails::Railtie
     initializer 'backframe' do |_app|
@@ -6,6 +8,8 @@ module Backframe
       ActionController::Base.send(:include, Backframe::ActsAsActivation)
       ActionController::Base.send(:include, Backframe::ActsAsReset)
       ActionController::Base.send(:include, Backframe::ActsAsSession)
+      ActiveRecord::Base.send(:include, Backframe::ActsAsActivable)
+      ActiveRecord::Base.send(:include, Backframe::ActsAsDistinct)
       ActiveRecord::Base.send(:include, Backframe::ActsAsOrderable)
       ActiveRecord::Base.send(:include, Backframe::ActsAsStatus)
       ActiveRecord::Base.send(:include, Backframe::ActsAsUser)

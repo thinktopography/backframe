@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Backframe
   module ActsAsUser
     extend ActiveSupport::Concern
@@ -12,8 +14,8 @@ module Backframe
 
         attr_accessor :password, :change_password, :set_password, :old_password, :new_password, :confirm_password, :confirm_email
 
-        has_many :activations, :dependent => :destroy
-        has_many :resets, :dependent => :destroy
+        has_many :activations, :class_name => 'Backframe::Activation', :dependent => :destroy, :as => :user
+        has_many :resets, :class_name => 'Backframe::Reset', :dependent => :destroy, :as => :user
 
         after_validation :set_new_password, :if => Proc.new { |u| u.new_password.present? }
         after_create :activate

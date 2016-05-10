@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Backframe
   module ActsAsResource
     module Actions

@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Backframe
   module ActsAsStatus
     extend ActiveSupport::Concern

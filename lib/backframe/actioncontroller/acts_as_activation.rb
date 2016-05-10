@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'active_support'
 require 'active_support/inflector'
 
@@ -16,7 +18,7 @@ module Backframe
           before_action :load_#{model.underscore}, :except => :show
 
           def show
-            @activation = Activation.find_by(:token => params[:token])
+            @activation = Backframe::Activation.find_by(:token => params[:token])
             if @activation.nil?
               flash[:error] = I18n.t(:activation_invalid)
               redirect_to account_signin_path
@@ -49,7 +51,7 @@ module Backframe
           private
 
             def load_#{model.underscore}
-              @activation = Activation.find_by(:id => session[:activation_id])
+              @activation = Backframe::Activation.find_by(:id => session[:activation_id])
               @user = @activation.user
               if @user.nil?
                 flash[:error] = I18n.t(:activation_invalid)

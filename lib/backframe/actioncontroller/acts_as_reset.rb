@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'active_support'
 require 'active_support/inflector'
 
@@ -32,7 +34,7 @@ module Backframe
           end
 
           def show
-            @reset = Reset.find_by(:token => params[:token])
+            @reset = Backframe::Reset.find_by(:token => params[:token])
             if @reset.nil?
               flash[:error] = I18n.t(:reset_invalid)
               redirect_to '#{arguments[:prefix]}/signin'
