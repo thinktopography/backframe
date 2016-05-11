@@ -40,12 +40,6 @@ module Backframe
 
           arguments[:in].each do |option|
             class_eval <<-EOV
-              scope :#{option}, -> { where(:#{field} => '#{option}') }
-
-              def #{option}?
-                self.#{field} == '#{option}'
-              end
-
               scope :#{field}_#{option}, -> { where(:#{field} => '#{option}') }
 
               def #{field}_#{option}?
