@@ -1,5 +1,5 @@
 # encoding: utf-8
 
 module Backframe
-  VERSION = '0.0.11'
+  VERSION = '0.0.13'
 end

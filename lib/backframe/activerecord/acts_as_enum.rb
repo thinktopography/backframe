@@ -15,7 +15,6 @@ module Backframe
         field = args[0]
         arguments = args[1]
 
-
         if arguments.key?(:required)
 
           validates_presence_of field
@@ -38,9 +37,17 @@ module Backframe
 
           validates_inclusion_of field, :in => arguments[:in]
 
+          class_eval <<-EOV
+            scope :#{field}_is, -> (*options) { where('#{field} IN (?)', (options.is_a?(Array) ? options : [options])) }
+          EOV
+
+          class_eval <<-EOV
+            scope :#{field}_not, -> (*options) { where('#{field} NOT IN (?)', (options.is_a?(Array) ? options : [options])) }
+          EOV
+
           arguments[:in].each do |option|
             class_eval <<-EOV
-              scope :#{field}_#{option}, -> { where(:#{field} => '#{option}') }
+              scope :#{field}_#{option}, -> { #{field}_is(option) }
 
               def #{field}_#{option}?
                 self.#{field} == '#{option}'
