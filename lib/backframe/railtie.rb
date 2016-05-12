@@ -13,6 +13,7 @@ module Backframe
       ActiveRecord::Base.send(:include, Backframe::ActsAsEnum)
       ActiveRecord::Base.send(:include, Backframe::ActsAsOrderable)
       ActiveRecord::Base.send(:include, Backframe::ActsAsUser)
+      ActiveRecord::Base.send(:include, Backframe::DefaultValues)
       ActiveRecord::Base.send(:include, Backframe::FilterSort)
       ActiveRecord::Migration.send(:include, Backframe::Migration)
       Backframe::Mime.register_types

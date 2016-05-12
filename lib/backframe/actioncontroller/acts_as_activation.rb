@@ -10,15 +10,17 @@ module Backframe
     class_methods do
       def acts_as_activation(model, *args)
 
-        arguments = args[0]
+        arguments = args[0] || {}
+
+        activation = arguments[:activation] || 'Backframe::Activation'
 
         class_eval <<-EOV
 
           layout 'signin'
-          before_action :load_#{model.underscore}, :except => :show
+          before_action :load_user, :except => :show
 
           def show
-            @activation = Backframe::Activation.find_by(:token => params[:token])
+            @activation = #{activation}.find_by(:token => params[:token])
             if @activation.nil?
               flash[:error] = I18n.t(:activation_invalid)
               redirect_to account_signin_path
@@ -50,8 +52,8 @@ module Backframe
 
           private
 
-            def load_#{model.underscore}
-              @activation = Backframe::Activation.find_by(:id => session[:activation_id])
+            def load_user
+              @activation = #{activation}.find_by(:id => session[:activation_id])
               @user = @activation.user
               if @user.nil?
                 flash[:error] = I18n.t(:activation_invalid)

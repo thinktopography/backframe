@@ -10,12 +10,16 @@ module Backframe
 
     module ClassMethods
 
-      def acts_as_user
+      def acts_as_user(*args)
+        arguments = args[0] || {}
+
+        reset = arguments[:reset] || 'Backframe::Reset'
+        activation = arguments[:activation] || 'Backframe::Activation'
 
         attr_accessor :password, :change_password, :set_password, :old_password, :new_password, :confirm_password, :confirm_email
 
-        has_many :activations, :class_name => 'Backframe::Activation', :dependent => :destroy, :as => :user
-        has_many :resets, :class_name => 'Backframe::Reset', :dependent => :destroy, :as => :user
+        has_many :activations, :class_name => activation, :dependent => :destroy, :as => :user
+        has_many :resets, :class_name => reset, :dependent => :destroy, :as => :user
 
         after_validation :set_new_password, :if => Proc.new { |u| u.new_password.present? }
         after_create :activate

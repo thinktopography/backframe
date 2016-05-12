@@ -41,7 +41,7 @@ module Backframe
             scope :#{field}_is, -> (*options) { where('#{field} IN (?)', (options.is_a?(Array) ? options : [options])) }
 
             def #{field}_is?(*options)
-              (options.is_a?(Array) ? options : [options])include?(self.#{field})
+              (options.is_a?(Array) ? options : [options]).map(&:to_s).include?(self.#{field})
             end
           EOV
 
@@ -49,7 +49,7 @@ module Backframe
             scope :#{field}_not, -> (*options) { where('#{field} NOT IN (?)', (options.is_a?(Array) ? options : [options])) }
 
             def #{field}_not?(*options)
-              !(options.is_a?(Array) ? options : [options])include?(self.#{field})
+              !(options.is_a?(Array) ? options : [options]).map(&:to_s).include?(self.#{field})
             end
           EOV
 

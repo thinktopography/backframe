@@ -10,7 +10,7 @@ module Backframe
 
     class_methods do
       def acts_as_resource(resource, *args)
-        arguments = (args.present?) ? args[0] : {}
+        arguments = args[0] || {}
 
         @resource = resource
         @resource_opts = arguments

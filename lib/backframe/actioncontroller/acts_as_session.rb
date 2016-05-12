@@ -10,7 +10,7 @@ module Backframe
     class_methods do
       def acts_as_session(model, *args)
 
-        arguments = args[0]
+        arguments = args[0] || {}
 
         class_eval <<-EOV
 

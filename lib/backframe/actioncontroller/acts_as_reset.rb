@@ -10,13 +10,15 @@ module Backframe
     class_methods do
       def acts_as_reset(model, *args)
 
-        arguments = args[0]
+        arguments = args[0] || {}
+
+        reset = arguments[:reset] || 'Backframe::Reset'
 
         class_eval <<-EOV
 
           layout 'signin'
           before_action :redirect_if_signed_in
-          before_action :load_#{model.underscore}, :except => [:new,:show]
+          before_action :load_user, :except => [:new,:show]
 
           def new
             if request.post?
@@ -34,7 +36,7 @@ module Backframe
           end
 
           def show
-            @reset = Backframe::Reset.find_by(:token => params[:token])
+            @reset = #{reset}.find_by(:token => params[:token])
             if @reset.nil?
               flash[:error] = I18n.t(:reset_invalid)
               redirect_to '#{arguments[:prefix]}/signin'
@@ -43,7 +45,7 @@ module Backframe
               redirect_to '#{arguments[:prefix]}/signin'
             else
               @reset.claim
-              session[:reset_id] = @reset.user.id
+              session[:reset_id] = @reset.id
               flash[:error] = I18n.t(:reset_password)
               redirect_to '#{arguments[:prefix]}/reset/password'
             end
@@ -66,8 +68,9 @@ module Backframe
 
           private
 
-            def load_#{model.underscore}
-              @user = #{model}.find_by(:id => session[:reset_id])
+            def load_user
+              @reset = #{reset}.find_by(:id => session[:reset_id])
+              @user = @reset.user
               if @user.nil?
                 flash[:error] = I18n.t(:reset_invalid)
                 redirect_to account_signin_path
