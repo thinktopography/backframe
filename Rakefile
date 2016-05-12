@@ -2,6 +2,7 @@ $LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
 require 'rspec/core/rake_task'
 require 'bundler/version'
 require './lib/backframe'
+require './lib/backframe/version'
 
 RSpec::Core::RakeTask.new(:spec) do |t|
   t.rspec_opts = ['--color']
