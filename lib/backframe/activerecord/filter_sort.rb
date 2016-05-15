@@ -49,16 +49,26 @@ module Backframe
 
       def _sort(relation, key, order, default_key = 'created_at', default_order = 'desc', included = nil)
         sortfields = {}
-        included ||= [self]
-        included.each do |model|
-          model.columns.each do |column|
-            sortkey = (model == self) ? column.name : "#{model.table_name.singularize}.#{column.name}"
-            sortfields[sortkey] = "\"#{model.table_name}\".\"#{column.name}\""
+        sortjoins = {}
+        self.columns.each do |column|
+          sortfields[column.name] = "\"#{self.table_name}\".\"#{column.name}\""
+        end
+        model_table = self.table_name
+        associations = self.reflect_on_all_associations(:belongs_to)
+        associations.each do |association|
+          association_name = association.name
+          association_table = association.class_name.constantize.table_name
+          association_foreign_key = association.foreign_key
+          sortjoins["#{association.name}"] = "LEFT OUTER JOIN \"#{association_table}\" #{association_name} ON (\"#{association_name}\".\"id\" = \"#{model_table}\".\"#{association_foreign_key}\")"
+          association.class_name.constantize.columns.each do |column|
+            sortfields["#{association_name}.#{column.name}"] = "\"#{association_name}\".\"#{column.name}\""
           end
         end
-
-        key = (key.present? && sortfields.has_key?(key)) ? key : default_key
-        order = (order.present?) ? order : default_order
+        key = (key.present? && sortfields.has_key?(key)) ? key : 'created_at'
+        order = (order.present?) ? order : 'desc'
+        if parts = key.match(/(\w*)\.(\w*)/)
+          relation = relation.joins(sortjoins[parts[1]])
+        end
         relation.order("#{sortfields[key]} #{order}")
       end
     end
