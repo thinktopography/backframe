@@ -22,7 +22,7 @@ require 'backframe/models/activity'
 require 'backframe/models/activation'
 require 'backframe/models/reset'
 require 'backframe/serializers/activity_serializer'
-require 'backframe/image_cache'
+require 'backframe/image_cache/image_cache'
 
 module Backframe
 
