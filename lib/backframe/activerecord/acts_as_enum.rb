@@ -38,7 +38,7 @@ module Backframe
           validates_inclusion_of field, :in => arguments[:in]
 
           class_eval <<-EOV
-            scope :#{field}_is, -> (*options) { where('#{field} IN (?)', (options.is_a?(Array) ? options : [options])) }
+            scope :#{field}_is, -> (*options) { where('"#{self.table_name}"."#{field}" IN (?)', (options.is_a?(Array) ? options : [options])) }
 
             def #{field}_is?(*options)
               (options.is_a?(Array) ? options : [options]).map(&:to_s).include?(self.#{field})
@@ -46,7 +46,7 @@ module Backframe
           EOV
 
           class_eval <<-EOV
-            scope :#{field}_not, -> (*options) { where('#{field} NOT IN (?)', (options.is_a?(Array) ? options : [options])) }
+            scope :#{field}_not, -> (*options) { where('"#{self.table_name}"."#{field}" NOT IN (?)', (options.is_a?(Array) ? options : [options])) }
 
             def #{field}_not?(*options)
               !(options.is_a?(Array) ? options : [options]).map(&:to_s).include?(self.#{field})
