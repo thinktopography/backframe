@@ -57,7 +57,7 @@ module Backframe
         def redis
           return @redis if @redis.present?
           config = YAML.load_file("#{Rails.root}/config/redis.yml")[Rails.env]
-          @redis = Redis.new(:host => config['host'], :port => config['port'], :db => 2)
+          @redis = Redis.new(:host => config['host'], :port => config['port'], :db => config[:cache])
         end
 
     end
