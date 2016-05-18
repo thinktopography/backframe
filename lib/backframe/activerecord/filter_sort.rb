@@ -56,15 +56,16 @@ module Backframe
         model_table = self.table_name
         associations = self.reflect_on_all_associations(:belongs_to)
         associations.each do |association|
-          association_name = association.name
-          association_table = association.class_name.constantize.table_name
-          association_foreign_key = association.foreign_key
-          sortjoins["#{association.name}"] = "LEFT OUTER JOIN \"#{association_table}\" #{association_name} ON (\"#{association_name}\".\"id\" = \"#{model_table}\".\"#{association_foreign_key}\")"
-          association.class_name.constantize.columns.each do |column|
-            sortfields["#{association_name}.#{column.name}"] = "\"#{association_name}\".\"#{column.name}\""
+          if !(association.options.key?(:polymorphic) && association.options[:polymorphic])
+            association_name = association.name
+            association_table = association.class_name.constantize.table_name
+            association_foreign_key = association.foreign_key
+            sortjoins["#{association.name}"] = "LEFT OUTER JOIN \"#{association_table}\" #{association_name} ON (\"#{association_name}\".\"id\" = \"#{model_table}\".\"#{association_foreign_key}\")"
+            association.class_name.constantize.columns.each do |column|
+              sortfields["#{association_name}.#{column.name}"] = "\"#{association_name}\".\"#{column.name}\""
+            end
           end
         end
-
         key = (key.present? && sortfields.has_key?(key)) ? key : default_key
         order = (order.present?) ? order : default_order
         if parts = key.match(/(\w*)\.(\w*)/)
