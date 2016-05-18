@@ -52,8 +52,7 @@ module Backframe
             if @item.respond_to?(:activities)
               Activity.create!(subject: current_user, text: 'updated {object1}', object1: @item)
             end
-
-            render json: @item, adapter: Backframe::ActsAsAPI::Adapter
+            render json: @item
           else
             resource_error_response(@item, 422)
           end

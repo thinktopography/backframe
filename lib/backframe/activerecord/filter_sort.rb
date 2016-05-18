@@ -64,8 +64,9 @@ module Backframe
             sortfields["#{association_name}.#{column.name}"] = "\"#{association_name}\".\"#{column.name}\""
           end
         end
-        key = (key.present? && sortfields.has_key?(key)) ? key : 'created_at'
-        order = (order.present?) ? order : 'desc'
+
+        key = (key.present? && sortfields.has_key?(key)) ? key : default_key
+        order = (order.present?) ? order : default_order
         if parts = key.match(/(\w*)\.(\w*)/)
           relation = relation.joins(sortjoins[parts[1]])
         end

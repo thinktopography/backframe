@@ -12,6 +12,7 @@ module Backframe
       ActiveRecord::Base.send(:include, Backframe::ActsAsDistinct)
       ActiveRecord::Base.send(:include, Backframe::ActsAsEnum)
       ActiveRecord::Base.send(:include, Backframe::ActsAsOrderable)
+      ActiveRecord::Base.send(:include, Backframe::ActsAsPercent)
       ActiveRecord::Base.send(:include, Backframe::ActsAsPhone)
       ActiveRecord::Base.send(:include, Backframe::ActsAsUser)
       ActiveRecord::Base.send(:include, Backframe::DefaultValues)

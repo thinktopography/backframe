@@ -17,22 +17,24 @@ module Backframe
 
         class_eval <<-EOV
 
-          after_initialize :extract_#{entity}, :if => Proc.new { |c| c.#{entity}.present? }
-          before_save :compress_#{entity}, :if => Proc.new { |c| c.#{entity}.present? }
+          after_initialize :uncast_phone_#{entity}, :if => Proc.new { |c| c.#{entity}.present? }
+          before_save :cast_phone_#{entity}, :if => Proc.new { |c| c.#{entity}.present? }
+          after_save :uncast_phone_#{entity}, :if => Proc.new { |c| c.#{entity}.present? }
 
-          validate :validates_#{entity}, :if => Proc.new { |c| c.#{entity}.present? }
+          validate :validates_phone_#{entity}, :if => Proc.new { |c| c.#{entity}.present? }
+
           private
 
-          def extract_#{entity}
+          def uncast_phone_#{entity}
             self.#{entity} = Phony.format(self.#{entity}, :format => '%{ndc}-%{local}')
           end
 
-          def compress_#{entity}
+          def cast_phone_#{entity}
             self.#{entity} = Phony.normalize(self.#{entity})
             self.#{entity} = '1'+self.#{entity} if (self.#{entity}.length == 10)
           end
 
-          def validates_#{entity}
+          def validates_phone_#{entity}
             testvalue = Phony.normalize(self.#{entity})
             testvalue = '1'+test if (testvalue.length == 10)
             if Phony.plausible?(testvalue)
