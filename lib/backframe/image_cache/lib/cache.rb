@@ -11,7 +11,7 @@ module Backframe
         @conversions = conversions
       end
 
-      def process!
+      def process
         begin
           test(filepath, conversions)
         rescue
@@ -24,7 +24,7 @@ module Backframe
         normalized = Backframe::ImageCache::Conversions.new(conversions)
         key = "imagecache/#{normalized.to_s}/#{filekey}"
         if !redis.get(key)
-          asset = Backframe::ImageCache::Asset.new(filepath, normalized).process!
+          asset = Backframe::ImageCache::Asset.new(filepath, normalized).process
           upload_to_s3(asset, key)
           save_to_redis(key)
         end

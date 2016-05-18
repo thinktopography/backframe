@@ -9,11 +9,11 @@ module Backframe
     class Base
 
       def asset(filepath, conversions)
-        Backframe::ImageCache::Asset.new(filepath, conversions).process!
+        Backframe::ImageCache::Asset.new(filepath, conversions).process
       end
 
       def cached(filepath, conversions)
-        Backframe::ImageCache::Cache.new(filepath, conversions).process!
+        Backframe::ImageCache::Cache.new(filepath, conversions).process
       end
 
       def path(filepath, conversions)

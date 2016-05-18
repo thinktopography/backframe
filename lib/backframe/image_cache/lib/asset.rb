@@ -11,7 +11,7 @@ module Backframe
         @conversions = conversions
       end
 
-      def process!
+      def process
         normalized = Backframe::ImageCache::Conversions.new(conversions)
         if filepath.present?
           fullpath = fullpath(filepath)
