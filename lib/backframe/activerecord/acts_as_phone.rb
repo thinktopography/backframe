@@ -36,7 +36,7 @@ module Backframe
 
           def validates_phone_#{entity}
             testvalue = Phony.normalize(self.#{entity})
-            testvalue = '1'+test if (testvalue.length == 10)
+            testvalue = '1'+testvalue if (testvalue.length == 10)
             if Phony.plausible?(testvalue)
               self.#{entity}.add(:#{entity}, 'invalid #{entity} number')
             end
