@@ -10,7 +10,8 @@ module Backframe
           conditions = []
           params = []
           fields.each do |field|
-            conditions << "LOWER(\"#{self.table_name}\".\"#{field}\"::VARCHAR) LIKE ?"
+            column = (field.match(/.*\..*/)) ? field : "\"#{self.table_name}\".\"#{field}\""
+            conditions << "LOWER(#{column}::VARCHAR) LIKE ?"
             params << '%'+filters[:q].downcase+'%'
           end
           args = params.unshift(conditions.join(' OR '))

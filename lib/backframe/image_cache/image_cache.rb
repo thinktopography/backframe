@@ -26,8 +26,16 @@ module Backframe
         Rails.application.config.root_url + path(filepath, conversions)
       end
 
+      def http_url(filepath, conversions)
+        url(filepath, conversions).gsub('https', 'http')
+      end
+
       def cdn_url(filepath, conversions)
         Rails.application.config.cdn_url + path(filepath, conversions)
+      end
+
+      def http_cdn_url(filepath, conversions)
+        cdn_url(filepath, conversions).gsub('https', 'http')
       end
 
     end

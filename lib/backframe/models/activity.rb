@@ -13,7 +13,7 @@ module Backframe
     default_scope -> { includes(:subject,:object1,:object2,:story).order(:created_at => :desc) }
 
     def text=(text)
-      self.story = Story.find_or_initialize_by(:text => text)
+      self.story = Backframe::Story.find_or_initialize_by(:text => text)
     end
 
     def subject=(object)

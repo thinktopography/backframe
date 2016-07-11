@@ -11,7 +11,7 @@ module Backframe
 
     after_initialize :init, :if => Proc.new { |o| o.new_record? }
     after_create :enforce_uniqueness
-    after_create :send_email
+    after_commit :send_email
 
     def claim
       self.claimed_at = Time.zone.now

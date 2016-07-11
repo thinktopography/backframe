@@ -25,7 +25,6 @@ module Backframe
         after_create :activate
 
         validates_presence_of :first_name, :last_name, :email
-        validates_uniqueness_of :email
         validate :validate_password, :if => Proc.new { |u| u.change_password.present? || u.set_password.present? }
 
         class_eval <<-EOV

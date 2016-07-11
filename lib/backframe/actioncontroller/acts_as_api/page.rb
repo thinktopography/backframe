@@ -144,7 +144,7 @@ module Backframe
         rows = collection_to_array(collection, serializer, fields)
         rows.each_with_index do |row, i|
           row.each_with_index do |col, j|
-            worksheet.write(i, j, col)
+            worksheet.write_string(i, j, col)
           end
         end
         workbook.close

@@ -34,7 +34,9 @@ module Backframe
             end
 
             def toggle_#{field}_distinction
-              self.#{arguments[:parent]}.#{arguments[:association]}.where('id != ?', self.id).update_all(:#{field} => false)
+              self.#{arguments[:parent]}.#{arguments[:association]}.where('id != ?', self.id).each do |item|
+                item.update_attributes(:#{field} => false)
+              end
             end
 
         EOV

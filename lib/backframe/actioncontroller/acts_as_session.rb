@@ -27,7 +27,7 @@ module Backframe
           end
 
           def create
-            if @user = #{model}.find_by_email(params[:#{model.underscore}][:email])
+            if @user = #{model}.where('LOWER(email) = ?', params[:#{model.underscore}][:email].downcase).first
               if @user.locked_out?
                 flash[:error] = I18n.t(:session_locked)
                 session[:signin_locked] = true
