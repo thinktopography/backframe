@@ -1,8 +1,8 @@
 ENV['RAILS_ENV'] = 'test'
 
+require 'rails'
 require 'backframe'
 
-require 'rails'
 require 'action_controller/railtie'
 require 'active_model_serializers'
 require 'active_model_serializers/railtie'
