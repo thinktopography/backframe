@@ -3,6 +3,11 @@
 module Backframe
   class Railtie < ::Rails::Railtie
     initializer 'backframe' do |_app|
+      require 'backframe/models/activity'
+      require 'backframe/models/activation'
+      require 'backframe/models/reset'
+      require 'backframe/models/story'
+
       ActionController::Base.send(:include, Backframe::ActsAsAPI)
       ActionController::Base.send(:include, Backframe::ActsAsResource)
       ActionController::Base.send(:include, Backframe::ActsAsActivation)

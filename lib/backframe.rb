@@ -20,20 +20,12 @@ require 'backframe/activerecord/acts_as_user'
 require 'backframe/activerecord/default_values'
 require 'backframe/activerecord/filter_sort'
 require 'backframe/activerecord/migration'
-require 'backframe/models/activity'
-require 'backframe/models/activation'
-require 'backframe/models/reset'
-require 'backframe/models/story'
 require 'backframe/serializers/activity_serializer'
 require 'backframe/image_cache/image_cache'
 
 module Backframe
 
   extend ActiveSupport::Autoload
-
-  autoload :Activity
-  autoload :Activation
-  autoload :Reset
 
   module Exceptions
     class Unauthenticated < StandardError; end
