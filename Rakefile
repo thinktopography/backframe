@@ -1,14 +1,14 @@
 $LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
-require 'rspec/core/rake_task'
+require 'rake/testtask'
 require 'bundler/version'
 require './lib/backframe'
 require './lib/backframe/version'
 
-RSpec::Core::RakeTask.new(:spec) do |t|
-  t.rspec_opts = ['--color']
+Rake::TestTask.new do |t|
+  t.libs << '.' << 'lib' << 'test'
+  t.test_files = FileList['test/*_test.rb']
+  t.verbose = false
 end
-
-task default: :spec
 
 desc "Build the gem"
 task :build do
@@ -17,10 +17,10 @@ end
 
 desc "install the gem"
 task :install do
-  system "gem install backframe-#{Backframe::VERSION}.gem"
+  system "gem install backframe-#{imagecache::VERSION}.gem"
 end
 
 desc "Build and release the gem"
 task :release => :build do
-  system "gem push backframe-#{Backframe::VERSION}.gem"
+  system "gem push backframe-#{imagecache::VERSION}.gem"
 end
