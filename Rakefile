@@ -1,14 +1,10 @@
 $LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
-require 'rake/testtask'
 require 'bundler/version'
 require './lib/backframe'
 require './lib/backframe/version'
+require 'rspec/core/rake_task'
 
-Rake::TestTask.new do |t|
-  t.libs << '.' << 'lib' << 'test'
-  t.test_files = FileList['test/*_test.rb']
-  t.verbose = false
-end
+RSpec::Core::RakeTask.new(:spec)
 
 desc "Build the gem"
 task :build do

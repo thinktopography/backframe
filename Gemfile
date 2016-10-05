@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gemspec
 
-gem 'activesupport'
-gem 'active_model_serializers'
-gem 'write_xlsx'
+group :development, :test do
+  gem 'rake'
+  gem 'rspec', '>= 2.0'
+end
