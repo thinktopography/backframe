@@ -1,10 +1,10 @@
 .project
 .DS_Store
 .bundle
+.idea
 coverage
 rdoc
 pkg
 *.gem
 example.rb
-.idea/
 Gemfile.lock
