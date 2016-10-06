@@ -6,8 +6,12 @@ module Backframe
 
     class Json
 
-      def self.render(collection)
-        { json: collection, content_type: 'application/json', status: 200 }
+      class << self
+
+        def render(collection, fields)
+          { json: collection, content_type: 'application/json', status: 200 }
+        end
+
       end
 
     end

@@ -6,8 +6,12 @@ module Backframe
 
     class Error
 
-      def self.render(collection)
-        { text: 'Unknown format', content_type: 'text/plain', status: 404 }
+      class << self
+
+        def render(collection)
+          { text: 'Unknown format', content_type: 'text/plain', status: 404 }
+        end
+
       end
 
     end

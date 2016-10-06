@@ -6,23 +6,27 @@ module Backframe
 
     class Xml
 
-      def self.render(collection)
-        data = self.format(collection)
-        { json: data, content_type: 'application/xhtml+xml', status: 200 }
-      end
+      class << self
 
-      def self.format(collection)
-        output  = '<?xml version="1.0"?>'
-        recordsname = collection.first.class.name.tableize
-        recordname = collection.first.class.name.tableize.singularize
-        output += "<#{recordsname}>"
-        collection.each do |record|
-          output += "<#{recordname}>"
-          output += "<id>#{record.id}</id>"
-          output += "</#{recordname}>"
+        def render(collection)
+          data = self.format(collection)
+          { json: data, content_type: 'application/xhtml+xml', status: 200 }
         end
-        output += "</#{recordsname}>"
-        output
+
+        def format(collection)
+          output  = '<?xml version="1.0"?>'
+          recordsname = collection.first.class.name.tableize
+          recordname = collection.first.class.name.tableize.singularize
+          output += "<#{recordsname}>"
+          collection.each do |record|
+            output += "<#{recordname}>"
+            output += "<id>#{record.id}</id>"
+            output += "</#{recordname}>"
+          end
+          output += "</#{recordsname}>"
+          output
+        end
+
       end
 
     end

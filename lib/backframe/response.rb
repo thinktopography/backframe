@@ -6,21 +6,25 @@ module Backframe
 
     class Base
 
-      def self.index(collection, format)
-        json = collection.to_json
-        if format == 'json'
-          Backframe::Response::Json.render(json)
-        elsif format == 'csv'
-          Backframe::Response::Csv.render(json, ",")
-        elsif format == 'tsv'
-          Backframe::Response::Csv.render(json, "\t")
-        elsif format == 'xml'
-          Backframe::Response::Xml.render(json)
-        elsif format == 'xlsx'
-          Backframe::Response::Xlsx.render(json)
-        else
-          Backframe::Response::Error.render(json)
+      class << self
+
+        def index(collection, fields = nil, format = 'json')
+          fields = Backframe::Params::Fields::parse(collection.first, fields)
+          if format == 'json'
+            Backframe::Response::Json.render(collection, fields)
+          elsif format == 'csv'
+            Backframe::Response::Csv.render(collection, fields, ",")
+          elsif format == 'tsv'
+            Backframe::Response::Csv.render(collection, fields, "\t")
+          elsif format == 'xml'
+            Backframe::Response::Xml.render(collection, fields)
+          elsif format == 'xlsx'
+            Backframe::Response::Xlsx.render(collection, fields)
+          else
+            Backframe::Response::Error.render(collection)
+          end
         end
+
       end
 
     end

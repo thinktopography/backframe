@@ -4,26 +4,31 @@ describe Backframe::Response::Csv do
 
   describe 'csv response adapter' do
 
-    it 'it renders with defaults' do
-      contacts = [
+    before do
+      @contacts = [
         { first_name: 'Greg', last_name: 'Kops', email: 'greg@thinktopography.com', photo: { id: 1, path: '/images/greg.jpg' } },
         { first_name: 'Armand', last_name: 'Zerilli', email: 'armand@thinktopography.com', photo: { id: 2, path: '/images/armand.jpg' } }
       ]
-      actual = Backframe::Response::Csv.render(contacts)
+    end
+
+    it 'renders with a simple key' do
+      fields = [
+        { label: 'first_name', key: 'first_name' },
+      ]
+      actual = Backframe::Response::Csv.render(@contacts, fields)
       expected = {
-        text: "first_name,last_name,email,photo.id,photo.path\nGreg,Kops,greg@thinktopography.com,1,/images/greg.jpg\nArmand,Zerilli,armand@thinktopography.com,2,/images/armand.jpg",
+        text: "first_name\nGreg\nArmand",
         content_type: "text/plain",
         status: 200
       }
       expect(actual).to eq(expected)
     end
 
-    it 'it renders with nested objects' do
-      contacts = [
-        { first_name: 'Greg', last_name: 'Kops', email: 'greg@thinktopography.com', photo: { id: 1, path: '/images/greg.jpg' } },
-        { first_name: 'Armand', last_name: 'Zerilli', email: 'armand@thinktopography.com', photo: { id: 2, path: '/images/armand.jpg' } }
+    it 'renders with a nested key' do
+      fields = [
+        { label: 'photo.id', key: 'photo.id' },
       ]
-      actual = Backframe::Response::Csv.render(contacts, ['photo.id'])
+      actual = Backframe::Response::Csv.render(@contacts, fields)
       expected = {
         text: "photo.id\n1\n2",
         content_type: "text/plain",
@@ -33,11 +38,11 @@ describe Backframe::Response::Csv do
     end
 
     it 'it renders with specific keys in a specific order' do
-      contacts = [
-        { first_name: 'Greg', last_name: 'Kops', email: 'greg@thinktopography.com', photo: { id: 1, path: '/images/greg.jpg' } },
-        { first_name: 'Armand', last_name: 'Zerilli', email: 'armand@thinktopography.com', photo: { id: 2, path: '/images/armand.jpg' } }
+      fields = [
+        { label: 'last_name', key: 'last_name' },
+        { label: 'first_name', key: 'first_name' }
       ]
-      actual = Backframe::Response::Csv.render(contacts, [:last_name, :first_name])
+      actual = Backframe::Response::Csv.render(@contacts, fields)
       expected = {
         text: "last_name,first_name\nKops,Greg\nZerilli,Armand",
         content_type: "text/plain",
@@ -47,4 +52,5 @@ describe Backframe::Response::Csv do
     end
 
   end
+
 end
