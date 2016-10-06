@@ -23,7 +23,7 @@ class API::ContactsController < API::ApplicationController
     if result.success?
       render json: result.contact, status: 201
     else
-      render json: { message: result.message, errors: result.contact.errors }, status: 422
+      render json: { message: result.message, errors: result.errors }, status: 422
     end
   end
 
@@ -32,7 +32,7 @@ class API::ContactsController < API::ApplicationController
     if result.success?
       render json: result.contact, status: 201
     else
-      render json: { message: result.message, errors: result.contact.errors }, status: 422
+      render json: { message: result.message, errors: result.errors }, status: 422
     end
   end
 
@@ -41,7 +41,7 @@ class API::ContactsController < API::ApplicationController
     if result.success?
       render json: result.contact, status: 201
     else
-      render json: { message: result.message, errors: result.contact.errors }, status: 422
+      render json: { message: result.message, errors: result.errors }, status: 422
     end
   end
 
@@ -88,8 +88,6 @@ class CreateContactService < Backframe::Service
     log_activity
     send_email
   end
-
-  private
 
   def create_contact
     ...
