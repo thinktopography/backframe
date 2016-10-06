@@ -1,18 +1,23 @@
 # Backframe
 Backframe is a library of functionality to help build robust REST APIs in Ruby.
 
-##Filtering
-Backframe supports a new type of object in your application - a filter object.
-These objects extend from `Backframe::Filter` and enable you to encapsulate and
-test your filtering logic.
+##Sorting & Filtering
+Backframe supports a new type of object in your application - a query object.
+These objects extend from `Backframe::Query` and enable you to encapsulate and
+test your sorting and filtering logic.
 
 ```Ruby
-class ContactFilter < Backframe::Filter
+class ContactQuery < Backframe::Query
 
   def self.filter(records, filters)
     records = records.where('LOWER(first_name) like ?', '%'+filters[:first_name].downcase+'%') if filters.key?(:first_name)
     records = records.where('LOWER(last_name) like ?', '%'+filters[:last_name].downcase+'%') if filters.key?(:last_name)
     records = records.where('LOWER(email) like ?', '%'+filters[:email].downcase+'%') if filters.key?(:email)
+    records
+  end
+
+  def self.sort(sorts)
+    records = records.order(sorts)
     records
   end
 
