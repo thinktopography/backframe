@@ -1,13 +1,48 @@
 # Backframe
 Backframe is a library of functionality to help build robust REST APIs in Ruby.
 
-##Resource Actions
+##API Controllers
+Backframe provides a collection of new core objects to help you write testable
+APIs for your Rails and Ruby Applications. Here is an example API controller
+
 ```Ruby
-class ContactsController < ApplicationController
+class API::ContactsController < API::ApplicationController
 
   def index
     contacts = ContactQuery.perform(request.query_parameters)
     render Backframe::Response::Base.index(contacts, params[:format])
+  end
+
+  def index
+    contact = Contact.find(params[:id])
+    render json: contact, status: 200
+  end
+
+  def create
+    result = CreateContactService.perform(params)
+    if result.success?
+      render json: result.contact, status: 201
+    else
+      render json: { message: result.message, errors: result.contact.errors }, status: 422
+    end
+  end
+
+  def update
+    result = UpdateContactService.perform(params)
+    if result.success?
+      render json: result.contact, status: 201
+    else
+      render json: { message: result.message, errors: result.contact.errors }, status: 422
+    end
+  end
+
+  def destroy
+    result = DestroyContactService.perform(params)
+    if result.success?
+      render json: result.contact, status: 201
+    else
+      render json: { message: result.message, errors: result.contact.errors }, status: 422
+    end
   end
 
 end
