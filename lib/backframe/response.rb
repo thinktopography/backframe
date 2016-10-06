@@ -7,7 +7,8 @@ module Backframe
     class << self
 
       def index(collection, fields = nil, format = 'json')
-        fields = Backframe::Params::Fields::parse(collection.first, fields)
+        template = ActiveModelSerializers::SerializableResource.new(collection.klass.new).serializable_hash
+        fields = Backframe::Params::Fields::parse(template, fields)
         if format == 'json'
           Backframe::Adapter::Json.render(collection, fields)
         elsif format == 'csv'
