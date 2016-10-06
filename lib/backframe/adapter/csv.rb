@@ -2,7 +2,7 @@
 
 module Backframe
 
-  module Response
+  module Adapter
 
     class Csv
 

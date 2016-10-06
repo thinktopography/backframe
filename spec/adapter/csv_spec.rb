@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Backframe::Response::Csv do
+describe Backframe::Adapter::Csv do
 
-  describe 'csv response adapter' do
+  describe 'csv adapter' do
 
     before do
       @contacts = [
@@ -15,7 +15,7 @@ describe Backframe::Response::Csv do
       fields = [
         { label: 'first_name', key: 'first_name' },
       ]
-      actual = Backframe::Response::Csv.render(@contacts, fields)
+      actual = Backframe::Adapter::Csv.render(@contacts, fields)
       expected = {
         text: "first_name\nGreg\nArmand",
         content_type: "text/plain",
@@ -28,7 +28,7 @@ describe Backframe::Response::Csv do
       fields = [
         { label: 'photo.id', key: 'photo.id' },
       ]
-      actual = Backframe::Response::Csv.render(@contacts, fields)
+      actual = Backframe::Adapter::Csv.render(@contacts, fields)
       expected = {
         text: "photo.id\n1\n2",
         content_type: "text/plain",
@@ -42,7 +42,7 @@ describe Backframe::Response::Csv do
         { label: 'last_name', key: 'last_name' },
         { label: 'first_name', key: 'first_name' }
       ]
-      actual = Backframe::Response::Csv.render(@contacts, fields)
+      actual = Backframe::Adapter::Csv.render(@contacts, fields)
       expected = {
         text: "last_name,first_name\nKops,Greg\nZerilli,Armand",
         content_type: "text/plain",

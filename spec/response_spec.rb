@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Backframe::Response::Base do
+describe Backframe::Response do
 
   describe 'response' do
 
@@ -12,7 +12,7 @@ describe Backframe::Response::Base do
     end
 
     it 'renders default csv response' do
-      actual = Backframe::Response::Base.index(@contacts, nil, 'csv')
+      actual = Backframe::Response.index(@contacts, nil, 'csv')
       expected = {
         text: "first_name,last_name,email,photo.id,photo.path\nGreg,Kops,greg@thinktopography.com,1,/images/greg.jpg\nArmand,Zerilli,armand@thinktopography.com,2,/images/armand.jpg",
         content_type: "text/plain",
@@ -22,7 +22,7 @@ describe Backframe::Response::Base do
     end
 
     it 'renders error if no format provided' do
-      actual = Backframe::Response::Base.index(@contacts, nil, 'unknown')
+      actual = Backframe::Response.index(@contacts, nil, 'unknown')
       expected = {
         text: 'Unknown format',
         content_type: 'text/plain',
