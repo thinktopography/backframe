@@ -1,6 +1,18 @@
 # Backframe
 Backframe is a library of functionality to help build robust REST APIs in Ruby.
 
+##Resource Actions
+```Ruby
+class ContactsController < ApplicationController
+
+  def index
+    contacts = ContactQuery.perform(request.query_parameters)
+    render Backframe::Response::Base.index(contacts, params[:format])
+  end
+
+end
+```
+
 ##Sorting & Filtering
 Backframe supports a new type of object in your application - a query object.
 These objects extend from `Backframe::Query` and enable you to encapsulate and
