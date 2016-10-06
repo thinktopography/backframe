@@ -1,4 +1,6 @@
 # Backframe
+![](https://circleci.com/gh/thinktopography/backframe.png?style=shield&circle-token=510e9789fad82aaa0d6e18ee15f49724bea193f8)
+
 Backframe is a library of functionality to help build robust REST APIs in Ruby.
 
 ##API Controllers
