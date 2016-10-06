@@ -6,13 +6,14 @@ require 'write_xlsx'
 
 require 'backframe/params/fields'
 require 'backframe/params/sort'
-require 'backframe/record'
-require 'backframe/response'
 require 'backframe/response/csv'
 require 'backframe/response/error'
 require 'backframe/response/json'
 require 'backframe/response/xlsx'
 require 'backframe/response/xml'
+require 'backframe/query'
+require 'backframe/record'
+require 'backframe/response'
 
 module Backframe
 end

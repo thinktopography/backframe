@@ -14,7 +14,7 @@ module Backframe
           sort_string.split(',').each do |token|
             token.strip!
             key = (token[0] == '-') ? token[1..-1] : token
-            order = (token[0] == '-') ? 'desc' : 'asc'
+            order = (token[0] == '-') ? 'DESC' : 'ASC'
             sort << { key: key, order: order }
           end
           sort
