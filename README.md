@@ -13,7 +13,7 @@ class API::ContactsController < API::ApplicationController
     render Backframe::Response.render(contacts, params[:format])
   end
 
-  def index
+  def show
     contact = Contact.find(params[:id])
     render json: contact, status: 200
   end
