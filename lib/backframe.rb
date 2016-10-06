@@ -14,6 +14,7 @@ require 'backframe/response/xml'
 require 'backframe/query'
 require 'backframe/record'
 require 'backframe/response'
+require 'backframe/service'
 
 module Backframe
 end

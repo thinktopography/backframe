@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Backframe::Record do
+describe Backframe::Query do
 
   describe 'query' do
 

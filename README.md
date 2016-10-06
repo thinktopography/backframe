@@ -13,7 +13,7 @@ class ContactsController < ApplicationController
 end
 ```
 
-##Sorting & Filtering
+##Query Objects
 Backframe supports a new type of object in your application - a query object.
 These objects extend from `Backframe::Query` and enable you to encapsulate and
 test your sorting and filtering logic.
@@ -32,6 +32,34 @@ class ContactQuery < Backframe::Query
     records = records.order(sorts)
     records
   end
+
+end
+```
+
+##Service Objects
+Backframe supports a new type of object in your application - a sevice object.
+These objects extend from `Backframe::Service` and enable you to abandon
+callbacks in favor of the service pattern.
+
+```Ruby
+class CreateContactService < Backframe::Service
+
+  def self.perform
+    create_contact
+    log_activity
+    send_email
+  end
+
+  private
+
+      def create_contact
+      end
+
+      def log_activity
+      end
+
+      def send_email
+      end
 
 end
 ```
