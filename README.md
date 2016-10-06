@@ -51,21 +51,21 @@ end
 ```
 
 ##Query Objects
-Backframe supports a new type of object in your application - a query object.
-These objects extend from `Backframe::Query` and enable you to encapsulate and
-test your sorting and filtering logic.
+Backframe adds query objects to your application which can be placed in the
+`app/queries` directory. These objects extend from `Backframe::Query` and enable
+you to encapsulate and test your sorting and filtering logic.
 
 ```Ruby
 class ContactQuery < Backframe::Query
 
-  def self.filter(records, filters)
+  def filter(records, filters)
     records = records.where('LOWER(first_name) like ?', '%'+filters[:first_name].downcase+'%') if filters.key?(:first_name)
     records = records.where('LOWER(last_name) like ?', '%'+filters[:last_name].downcase+'%') if filters.key?(:last_name)
     records = records.where('LOWER(email) like ?', '%'+filters[:email].downcase+'%') if filters.key?(:email)
     records
   end
 
-  def self.sort(sorts)
+  def sort(sorts)
     records = records.order(sorts)
     records
   end
@@ -74,9 +74,9 @@ end
 ```
 
 ##Service Objects
-Backframe supports a new type of object in your application - a sevice object.
-These objects extend from `Backframe::Service` and enable you to abandon
-callbacks in favor of the service pattern.
+Backframe adds service objects to your application which can be placed in the
+`app/services` directory. These objects extend from `Backframe::Service` and
+enable you to abandon callbacks in favor of the service pattern.
 
 ```Ruby
 class CreateContactService < Backframe::Service
