@@ -4,7 +4,19 @@ module Backframe
 
   class Query
 
-    def self.perform(params = {})
+    class << self
+
+      def build(*args)
+        new(*args)
+      end
+
+      def perform
+        build(*args).perform
+      end
+
+    end
+
+    def perform(params = {})
       records = self.name.gsub("Filter", "").constantize
       filters = params.except([:exclude_ids,:fields,:page,:per_page,:sort])
       if filters.any?
@@ -17,11 +29,11 @@ module Backframe
       records
     end
 
-    def self.filter(records, filters)
+    def filter(records, filters)
       records
     end
 
-    def self.sort(records, sorts)
+    def sort(records, sorts)
       order = []
       sorts.each do |sort|
         order << sort.key + " " + sort.order

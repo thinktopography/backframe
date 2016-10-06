@@ -79,7 +79,11 @@ callbacks in favor of the service pattern.
 ```Ruby
 class CreateContactService < Backframe::Service
 
-  def self.perform
+  def initialize(params)
+    @params = params
+  end
+
+  def perform
     create_contact
     log_activity
     send_email
@@ -87,14 +91,17 @@ class CreateContactService < Backframe::Service
 
   private
 
-      def create_contact
-      end
+  def create_contact
+    ...
+  end
 
-      def log_activity
-      end
+  def log_activity
+    ...
+  end
 
-      def send_email
-      end
+  def send_email
+    ...
+  end
 
 end
 ```
