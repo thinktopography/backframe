@@ -7,15 +7,19 @@ APIs for your Rails and Ruby Applications.
     <td>Build Status</td>
     <td>
       <a href="https://circleci.com/gh/thinktopography/backframe">
-        <img src="https://circleci.com/gh/thinktopography/backframe.png?style=shield&circle-token=510e9789fad82aaa0d6e18ee15f49724bea193f8" alt="Build Status" >
+        <img src="https://img.shields.io/circleci/project/thinktopography/backframe.svg?maxAge=600" alt="Build Status" >
       </a>
     </td>
   </tr>
   <tr>
     <td>Code Quality</td>
     <td>
-      <a href="https://codeclimate.com/github/thinktopography/backframe"><img src="https://codeclimate.com/github/thinktopography/backframe/badges/gpa.svg" /></a>
-      <a href="https://codeclimate.com/github/thinktopography/backframe/coverage"><img src="https://codeclimate.com/github/thinktopography/backframe/badges/coverage.svg" /></a>
+      <a href="https://codeclimate.com/github/thinktopography/backframe">
+        <img src="https://img.shields.io/codeclimate/github/thinktopography/backframe.svg?maxAge=600" alt="Code Climate" />
+      </a>
+      <a href="https://codeclimate.com/github/thinktopography/backframe/coverage">
+        <img src="https://img.shields.io/codeclimate/coverage/github/thinktopography/backframe.svg?maxAge=600" alt="Code Coverage" />
+      </a>
     </td>
   </tr>
 </table>
