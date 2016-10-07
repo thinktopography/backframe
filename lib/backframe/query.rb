@@ -20,16 +20,16 @@ module Backframe
       records = self.name.gsub("Filter", "").constantize
       filters = params.except([:exclude_ids,:fields,:page,:per_page,:sort])
       if filters.any?
-        records = self.filter(records, filters)
+        records = filter(records, filters)
       end
       if params.key?(:sort)
         sorts = Backframe::Params::Sort.parse(sorts)
-        records = self.sort(records, sorts)
+        records = sort(records, sorts)
       end
       records
     end
 
-    def filter(records, filters)
+    def filter(records, _filters)
       records
     end
 

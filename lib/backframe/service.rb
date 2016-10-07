@@ -21,14 +21,18 @@ module Backframe
             result = service.perform
           rescue StandardError => e
             message = e.message
-            errors = e.errors
+            # errors = e.errors
             service.before_rollback
             raise ActiveRecord::Rollback
-            service.after_rollback
           end
           service.before_commit
         end
-        service.after_commit
+
+        if message.nil?
+          service.after_commit
+        else
+          service.after_rollback
+        end
 
         return (message.present?) ? Result::Failure.new(message: message, errors: errors) : result
       end

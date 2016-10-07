@@ -8,7 +8,7 @@ module Backframe
 
       class << self
 
-        def render(collection, fields)
+        def render(collection, _fields)
           { json: collection, content_type: 'application/json', status: 200 }
         end
 
