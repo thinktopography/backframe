@@ -2,6 +2,8 @@
 
 require 'active_support'
 require 'active_support/core_ext'
+require 'active_record'
+require 'active_model_serializers'
 require 'write_xlsx'
 
 require 'backframe/adapter/csv'

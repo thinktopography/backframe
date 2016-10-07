@@ -7,7 +7,7 @@ module Backframe
     class << self
 
       def index(collection, fields = nil, format = 'json')
-        template = ActiveModelSerializers::SerializableResource.new(collection.klass.new).serializable_hash
+        template = template(collection)
         fields = Backframe::Params::Fields::parse(template, fields)
         if format == 'json'
           Backframe::Adapter::Json.render(collection, fields)
@@ -21,6 +21,15 @@ module Backframe
           Backframe::Adapter::Xlsx.render(collection, fields)
         else
           { text: 'Unknown format', content_type: 'text/plain', status: 404 }
+        end
+      end
+
+      def template(collection)
+        sample = collection.first
+        if sample.is_a?(ActiveRecord::Base)
+          ActiveModelSerializers::SerializableResource.new(collection.first).serializable_hash
+        elsif sample.is_a?(Hash)
+          sample
         end
       end
 

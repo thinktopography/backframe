@@ -14,6 +14,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.add_development_dependency 'rake'
   gem.add_runtime_dependency 'activesupport', '~> 4.0'
-  gem.add_runtime_dependency 'active_model_serializers', '~> 0.8.3'
+  gem.add_runtime_dependency 'activerecord', '~> 4.2'
+  gem.add_runtime_dependency 'active_model_serializers', '~> 0.10.0'
   gem.add_runtime_dependency 'write_xlsx', '~> 0.83.0'
 end
