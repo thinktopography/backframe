@@ -23,7 +23,7 @@ APIs for your Rails and Ruby Applications.
     </td>
   </tr>
 </table>
-
+![](https://codeclimate.com/github/thinktopography/backframe/badges/coverage.svg)
 ## API Controllers
 Backframe Controllers are just like regular controllers in Rails. Here's an
 example of how you might use Backframe objects to fulfill requests:
