@@ -14,12 +14,8 @@ APIs for your Rails and Ruby Applications.
   <tr>
     <td>Code Quality</td>
     <td>
-      <a href="https://codeclimate.com/github/thinktopography/backframe">
-        <img src="https://codeclimate.com/github/thinktopography/backframe/badges/gpa.svg" alt="Code Quality">
-      </a>
-      <a href="https://codeclimate.com/github/thinktopography/backframe/coverage">
-        <img src="https://codeclimate.com/github/thinktopography/backframe/badges/coverage.svg" alt="Test Coverage">
-      </a>
+      <a href="https://codeclimate.com/github/thinktopography/backframe"><img src="https://codeclimate.com/github/thinktopography/backframe/badges/gpa.svg" /></a>
+      <a href="https://codeclimate.com/github/thinktopography/backframe/coverage"><img src="https://codeclimate.com/github/thinktopography/backframe/badges/coverage.svg" /></a>
     </td>
   </tr>
 </table>
