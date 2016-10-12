@@ -1,11 +1,15 @@
 machine:
   ruby:
     version: 2.2.2
-deployment:
-  production:
-    branch: release
-    commands:
-      - cd ~/backframe; bundle exec rake release
 database:
   override:
     - echo null
+deployment:
+  master:
+    branch: master
+    commands:
+      - npm run coverage
+  release:
+    branch: release
+    commands:
+      - cd ~/backframe; bundle exec rake release
