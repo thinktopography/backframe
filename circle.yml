@@ -6,3 +6,5 @@ deployment:
     branch: release
     commands:
       - cd ~/backframe; bundle exec rake release
+database:
+  override:
