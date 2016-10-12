@@ -10,10 +10,11 @@ module Backframe
         new(*args)
       end
 
-      def perform
+      def perform(*args)
         service = build(*args)
 
         message = nil
+        errors = {}
         result = nil
 
         ActiveRecord::Base.transaction do
@@ -34,7 +35,7 @@ module Backframe
           service.after_rollback
         end
 
-        return (message.present?) ? Result::Failure.new(message: message, errors: errors) : result
+        return (message.present?) ? Result::Failure.new(message: message, errors: errors) : Result::Success.new(service)
       end
 
     end

@@ -3,6 +3,10 @@ require "codeclimate-test-reporter"
 CodeClimate::TestReporter.start
 
 require 'fixtures/active_record'
+require 'fixtures/models'
+require 'fixtures/serializers'
+require 'fixtures/queries'
+require 'fixtures/services'
 require 'backframe'
 
 RSpec.configure do |config|

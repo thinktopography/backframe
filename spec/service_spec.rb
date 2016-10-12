@@ -5,7 +5,8 @@ describe Backframe::Service do
   describe 'service' do
 
     it 'performs' do
-      expect(true).to eq(true)
+      result = Backframe::Fixtures::CreatePostService.perform({ title: 'Test Post' })
+      expect(result.success?).to be_truthy
     end
 
   end
