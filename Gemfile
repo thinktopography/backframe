@@ -7,4 +7,5 @@ group :development, :test do
   gem 'rspec', '>= 2.0'
   gem "codeclimate-test-reporter", require: nil
   gem 'rubocop'
+  gem 'sqlite3'
 end

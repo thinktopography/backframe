@@ -2,6 +2,7 @@ require "codeclimate-test-reporter"
 
 CodeClimate::TestReporter.start
 
+require 'fixtures/active_record'
 require 'backframe'
 
 RSpec.configure do |config|
