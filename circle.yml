@@ -8,3 +8,4 @@ deployment:
       - cd ~/backframe; bundle exec rake release
 database:
   override:
+    - echo null
