@@ -8,22 +8,26 @@ module Backframe
 
       class << self
 
-        def render(collection)
-          data = self.format(collection)
-          { json: data, content_type: 'application/xhtml+xml', status: 200 }
+        def render(collection, fields)
+          data = self.format(collection, fields)
+          { xml: data, content_type: 'application/xhtml+xml', status: 200 }
         end
 
-        def format(collection)
+        def format(collection, fields)
           output  = '<?xml version="1.0"?>'
           recordsname = collection.first.class.name.tableize
           recordname = collection.first.class.name.tableize.singularize
-          output += "<#{recordsname}>"
-          collection.each do |record|
-            output += "<#{recordname}>"
-            output += "<id>#{record.id}</id>"
-            output += "</#{recordname}>"
+          output += "<records>"
+          collection.each do |item|
+            output += "<record>"
+            fields.each do |field|
+              if value = Backframe::Record.get_value(item, field[:key])
+                output += "<#{field[:key]}>#{value}</#{field[:key]}>"
+              end
+            end
+            output += "</record>"
           end
-          output += "</#{recordsname}>"
+          output += "</records>"
           output
         end
 

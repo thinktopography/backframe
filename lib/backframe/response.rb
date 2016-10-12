@@ -10,7 +10,7 @@ module Backframe
         template = template(collection)
         fields = Backframe::Params::Fields::parse(template, fields)
         if format == 'json'
-          Backframe::Adapter::Json.render(collection)
+          Backframe::Adapter::Json.render(collection, fields)
         elsif format == 'csv'
           Backframe::Adapter::Csv.render(collection, fields, ",")
         elsif format == 'tsv'

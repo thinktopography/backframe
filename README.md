@@ -32,7 +32,7 @@ example of how you might use Backframe objects to fulfill requests:
 class API::ContactsController < API::ApplicationController
 
   def index
-    contacts = ContactQuery.perform(request.query_parameters)
+    contacts = ContactQuery.perform(Contact, request.query_parameters)
     render Backframe::Response.render(contacts, params[:format])
   end
 

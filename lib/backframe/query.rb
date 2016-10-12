@@ -12,8 +12,7 @@ module Backframe
 
     end
 
-    def perform(params = {})
-      records = self.class.name.gsub("Query", "").constantize
+    def perform(records, params = {})
       filters = params.except([:exclude_ids,:fields,:page,:per_page,:sort])
       if filters.any?
         records = filter(records, filters)
