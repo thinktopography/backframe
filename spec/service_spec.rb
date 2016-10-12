@@ -4,9 +4,19 @@ describe Backframe::Service do
 
   describe 'service' do
 
-    it 'performs' do
-      result = Backframe::Fixtures::CreatePostService.perform({ title: 'Test Post' })
-      expect(result.success?).to be_truthy
+    before(:all) do
+      @greg = Backframe::Fixtures::Author.create(name: 'Greg Kops')
+    end
+
+    it 'succeeds' do
+      result = Backframe::Fixtures::CreatePostService.perform({ title: 'Test Post With Author', author: @greg })
+      expect(result.success?).to be(true)
+      expect(result.post.title).to eq('Test Post With Author')
+    end
+
+    it 'fails' do
+      result = Backframe::Fixtures::CreatePostService.perform({ title: 'Test Post Without Author'})
+      expect(result.success?).to be(false)
     end
 
   end

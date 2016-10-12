@@ -35,7 +35,7 @@ module Backframe
           service.after_rollback
         end
 
-        return (message.present?) ? Result::Failure.new(message: message, errors: errors) : Result::Success.new(service)
+        return (message.present?) ? Result::Failure.new(message: message, errors: errors) : Result::Success.new(result)
       end
 
     end

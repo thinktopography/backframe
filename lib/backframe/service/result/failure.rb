@@ -4,15 +4,12 @@ module Backframe
 
   class Service
 
-    class Result
+    module Result
 
-      class Success
-
-        def initialize(*args)
-        end
+      class Failure < Base
 
         def success?
-          true
+          false
         end
 
       end

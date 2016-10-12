@@ -12,11 +12,11 @@ module Backframe
 
       def perform
         create_post
-        @post
+        { post: @post }
       end
 
       def create_post
-        @post = Post.create(@params)
+        @post = Post.create!(@params)
       end
 
     end
