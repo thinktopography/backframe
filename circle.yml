@@ -5,10 +5,6 @@ database:
   override:
     - echo null
 deployment:
-  master:
-    branch: master
-    commands:
-      - cd ~/backframe; bundle exec codeclimate-test-reporter
   release:
     branch: release
     commands:
