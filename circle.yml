@@ -8,7 +8,7 @@ deployment:
   master:
     branch: master
     commands:
-      - npm run coverage
+      - cd ~/backframe; bundle exec codeclimate-test-reporter
   release:
     branch: release
     commands:
