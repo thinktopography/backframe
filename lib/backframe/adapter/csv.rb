@@ -9,11 +9,6 @@ module Backframe
       class << self
 
         def render(collection, fields, separator = ",")
-          data = format(collection, fields, separator)
-          { text: data, content_type: 'text/plain', status: 200 }
-        end
-
-        def format(collection, fields, separator)
           records = []
           labels = []
           fields.each do |field|

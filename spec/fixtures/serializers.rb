@@ -7,7 +7,6 @@ module Backframe
     class PostSerializer < ActiveModel::Serializer
       attributes :id, :title, :body
 
-      has_many :comments
       belongs_to :author
     end
 
@@ -24,5 +23,5 @@ module Backframe
     end
 
   end
-  
+
 end

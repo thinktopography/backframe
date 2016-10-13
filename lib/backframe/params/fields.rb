@@ -3,7 +3,7 @@
 module Backframe
 
   module Params
-    
+
     class Fields
 
       class << self

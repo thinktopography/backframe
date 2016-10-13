@@ -6,7 +6,8 @@ module Backframe
 
     class << self
 
-      def get_value(hash, path)
+      def get_value(record, path)
+        hash = serialized(record)
         path = cast_path(path)
         index = 0
         length = path.length
@@ -17,7 +18,8 @@ module Backframe
         hash
       end
 
-      def keys(hash, prefix = '')
+      def keys(record, prefix = '')
+        hash = serialized(record)
         keys = []
         hash.each do |key, value|
           fullkey =  (!prefix.empty?) ? "#{prefix}.#{key}" : key
@@ -41,6 +43,14 @@ module Backframe
           path.to_s.split(".")
         elsif path.is_a?(Array)
           path
+        end
+      end
+
+      def serialized(record)
+        if record.is_a?(ActiveRecord::Base)
+          ActiveModelSerializers::SerializableResource.new(record).serializable_hash
+        else
+          record
         end
       end
 

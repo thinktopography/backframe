@@ -4,6 +4,9 @@ module Backframe
 
   class Query
 
+    EXCLUDE_IDS_REGEX = /^[\d,]*$/
+    SORT_REGEX = /^[\w\_\-,]*$/
+
     class << self
 
       def perform(*args)
@@ -17,7 +20,11 @@ module Backframe
       if filters.any?
         records = filter(records, filters)
       end
-      if params.key?(:sort)
+      if params.key?(:exclude_ids) && params[:exclude_ids] =~ EXCLUDE_IDS_REGEX
+        table = records.arel_table.name
+        records = records.where('"'+table+'"."id" NOT IN (?)', params[:exclude_ids].split(","))
+      end
+      if params.key?(:sort) && params[:sort] =~ SORT_REGEX
         sorts = Backframe::Params::Sort.parse(params[:sort])
         records = sort(records, sorts)
       end

@@ -33,7 +33,7 @@ class API::ContactsController < API::ApplicationController
 
   def index
     contacts = ContactQuery.perform(Contact, request.query_parameters)
-    render Backframe::Response.render(contacts, params[:format])
+    render Backframe::Response.render(contacts, params)
   end
 
   def show

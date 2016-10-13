@@ -20,6 +20,8 @@ require 'backframe/record'
 require 'backframe/response'
 require 'backframe/service'
 
+ActiveModelSerializers.logger = nil
+
 module Backframe
 end
 
