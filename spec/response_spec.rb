@@ -87,6 +87,23 @@ describe Backframe::Response do
     expect(actual).to eq(expected)
   end
 
+  it 'renders default xml response' do
+    actual = Backframe::Response.render(Backframe::Fixtures::Contact, { format: 'xml' })
+    expected = {
+      xml: [
+        '<?xml version="1.0"?><records>',
+        '<record><id>1</id><first_name>Greg</first_name><last_name>Kops</last_name><email>greg@thinktopography.com</email><photo.id>1</photo.id><photo.path>/images/greg.jpg</photo.path></record>',
+        '<record><id>2</id><first_name>Megan</first_name><last_name>Pugh</last_name><email>megan@thinktopography.com</email><photo.id>2</photo.id><photo.path>/images/megan.jpg</photo.path></record>',
+        '<record><id>3</id><first_name>Kath</first_name><last_name>Tibbetts</last_name><email>kath@thinktopography.com</email><photo.id>3</photo.id><photo.path>/images/kath.jpg</photo.path></record>',
+        '<record><id>4</id><first_name>Armand</first_name><last_name>Zerilli</last_name><email>armand@thinktopography.com</email><photo.id>4</photo.id><photo.path>/images/armand.jpg</photo.path></record>',
+        '</records>'
+      ].join,
+      content_type: "application/xhtml+xml",
+      status: 200
+    }
+    expect(actual).to eq(expected)
+  end
+
   it 'renders default csv response' do
     actual = Backframe::Response.render(Backframe::Fixtures::Contact, { format: 'csv' })
     expected = {

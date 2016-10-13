@@ -12,7 +12,7 @@ describe Backframe::Query do
 
   it 'return no filtering as the default' do
     records = Backframe::Query.perform(@contact, {})
-    expect(records.count).to eq(4)
+    expect(records).to eq(@contact)
   end
 
   it 'can filter' do

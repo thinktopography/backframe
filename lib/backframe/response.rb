@@ -10,7 +10,7 @@ module Backframe
     class << self
 
       def render(records, params = {})
-        # begin
+        begin
           fields = Backframe::Response::Fields.new(records, params[:fields])
           collection = Backframe::Response::Collection.new(records, params[:page], params[:per_page])
           if params[:format] == 'json'
@@ -31,9 +31,9 @@ module Backframe
           else
             failure('Unknown Format', 404)
           end
-        # rescue Exception => e
-        #   failure('Application Error', 500)
-        # end
+        rescue Exception => e
+          failure('Application Error', 500)
+        end
       end
 
       def success(*response)
