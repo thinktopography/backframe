@@ -9,6 +9,7 @@ require 'fixtures/queries'
 require 'fixtures/services'
 require 'fixtures/seeds'
 require 'backframe'
+require 'roo'
 
 RSpec.configure do |config|
 
