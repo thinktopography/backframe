@@ -31,7 +31,7 @@ module Backframe
       records
     end
 
-    def filter(records, filters)
+    def filter(records, _filters)
       records
     end
 
