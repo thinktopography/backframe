@@ -4,22 +4,18 @@ module Backframe
 
   module Fixtures
 
-    class PostSerializer < ActiveModel::Serializer
-      attributes :id, :title, :body
+    class ContactSerializer < ActiveModel::Serializer
 
-      belongs_to :author
+      attributes :id, :first_name, :last_name, :email
+
+      belongs_to :photo
+
     end
 
-    class CommentSerializer < ActiveModel::Serializer
-      attributes :id, :contents
+    class PhotoSerializer < ActiveModel::Serializer
 
-      belongs_to :author
-    end
+      attributes :id, :path
 
-    class AuthorSerializer < ActiveModel::Serializer
-      attributes :id, :name
-
-      has_many :posts
     end
 
   end

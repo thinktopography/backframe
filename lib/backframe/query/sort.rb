@@ -2,7 +2,7 @@
 
 module Backframe
 
-  module Params
+  class Query
 
     class Sort
 

@@ -6,19 +6,22 @@ require 'active_record'
 require 'active_model_serializers'
 require 'write_xlsx'
 
-require 'backframe/adapter/csv'
-require 'backframe/adapter/json'
-require 'backframe/adapter/xlsx'
-require 'backframe/adapter/xml'
-require 'backframe/params/fields'
-require 'backframe/params/sort'
+require 'backframe/query'
+require 'backframe/query/sort'
+
+require 'backframe/response'
+require 'backframe/response/adapter/csv'
+require 'backframe/response/adapter/json'
+require 'backframe/response/adapter/xlsx'
+require 'backframe/response/adapter/xml'
+require 'backframe/response/collection'
+require 'backframe/response/fields'
+require 'backframe/response/record'
+
+require 'backframe/service'
 require 'backframe/service/result/base'
 require 'backframe/service/result/failure'
 require 'backframe/service/result/success'
-require 'backframe/query'
-require 'backframe/record'
-require 'backframe/response'
-require 'backframe/service'
 
 ActiveModelSerializers.logger = nil
 

@@ -6,23 +6,17 @@ ActiveRecord::Schema.define do
 
   self.verbose = false
 
-  create_table :posts, force: true do |t|
-    t.string :title
-    t.text :body
-    t.references :author
+  create_table :contacts, force: true do |t|
+    t.string :first_name
+    t.string :last_name
+    t.string :email
+    t.references :photo
     t.timestamps null: false
   end
 
-  create_table :authors, force: true do |t|
-    t.string :name
+  create_table :photos, force: true do |t|
+    t.string :path
     t.timestamps null: false
-  end
-
-  create_table :comments, force: true do |t|
-    t.text :contents
-    t.references :author
-    t.references :post
-    t.timestamp null: false
   end
 
 end

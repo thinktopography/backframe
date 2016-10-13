@@ -2,18 +2,14 @@ require 'spec_helper'
 
 describe Backframe::Service do
 
-  before(:all) do
-    @greg = Backframe::Fixtures::Author.create(name: 'Greg Kops')
-  end
-
   it 'succeeds' do
-    result = Backframe::Fixtures::CreatePostService.perform({ title: 'Test Post With Author', author: @greg })
+    result = Backframe::Fixtures::CreateContactService.perform({ first_name: 'Joe', last_name: 'Doe', email: 'john.doe@gmail.com' })
     expect(result.success?).to be(true)
-    expect(result.post.title).to eq('Test Post With Author')
+    expect(result.contact.first_name).to eq('Joe')
   end
 
   it 'fails' do
-    result = Backframe::Fixtures::CreatePostService.perform({ title: 'Test Post Without Author'})
+    result = Backframe::Fixtures::CreateContactService.perform({})
     expect(result.success?).to be(false)
   end
 

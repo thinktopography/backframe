@@ -4,19 +4,19 @@ module Backframe
 
   module Fixtures
 
-    class CreatePostService < Backframe::Service
+    class CreateContactService < Backframe::Service
 
       def initialize(params)
         @params = params
       end
 
       def perform
-        create_post
-        { post: @post }
+        create_contact
+        { contact: @contact }
       end
 
-      def create_post
-        @post = Post.create!(@params)
+      def create_contact
+        @contact = Contact.create!(@params)
       end
 
     end

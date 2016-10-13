@@ -7,6 +7,7 @@ require 'fixtures/models'
 require 'fixtures/serializers'
 require 'fixtures/queries'
 require 'fixtures/services'
+require 'fixtures/seeds'
 require 'backframe'
 
 RSpec.configure do |config|

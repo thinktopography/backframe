@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Backframe::Params::Sort do
+describe Backframe::Query::Sort do
 
   it 'returns the default sort order' do
-    actual = Backframe::Params::Sort.parse()
+    actual = Backframe::Query::Sort.parse()
     expected = [
       { key: 'created_at', order: 'DESC' },
     ]
@@ -11,7 +11,7 @@ describe Backframe::Params::Sort do
   end
 
   it 'returns a simple asecnding sort order' do
-    actual = Backframe::Params::Sort.parse('first_name')
+    actual = Backframe::Query::Sort.parse('first_name')
     expected = [
       { key: 'first_name', order: 'ASC' },
     ]
@@ -19,7 +19,7 @@ describe Backframe::Params::Sort do
   end
 
   it 'returns a simple desecnding sort order' do
-    actual = Backframe::Params::Sort.parse('-first_name')
+    actual = Backframe::Query::Sort.parse('-first_name')
     expected = [
       { key: 'first_name', order: 'DESC' },
     ]
@@ -27,7 +27,7 @@ describe Backframe::Params::Sort do
   end
 
   it 'returns a complex mixed sort order' do
-    actual = Backframe::Params::Sort.parse('first_name,-last_name')
+    actual = Backframe::Query::Sort.parse('first_name,-last_name')
     expected = [
       { key: 'first_name', order: 'ASC' },
       { key: 'last_name', order: 'DESC' }
@@ -36,7 +36,7 @@ describe Backframe::Params::Sort do
   end
 
   it 'doesnt care about spaces' do
-    actual = Backframe::Params::Sort.parse(' first_name , last_name ')
+    actual = Backframe::Query::Sort.parse(' first_name , last_name ')
     expected = [
       { key: 'first_name', order: 'ASC' },
       { key: 'last_name', order: 'ASC' }

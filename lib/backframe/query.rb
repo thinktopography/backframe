@@ -25,7 +25,7 @@ module Backframe
         records = records.where('"'+table+'"."id" NOT IN (?)', params[:exclude_ids].split(","))
       end
       if params.key?(:sort) && params[:sort] =~ SORT_REGEX
-        sorts = Backframe::Params::Sort.parse(params[:sort])
+        sorts = Backframe::Query::Sort.parse(params[:sort])
         records = sort(records, sorts)
       end
       records

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Backframe::Adapter::Csv do
+describe Backframe::Response::Adapter::Csv do
 
   before(:all) do
     @contacts = [

@@ -4,26 +4,19 @@ module Backframe
 
   module Fixtures
 
-    class Post < ActiveRecord::Base
+    class Contact < ActiveRecord::Base
 
-      has_many :comments
-      belongs_to :author
+      belongs_to :photo
 
-      validates :title, presence: true
-      validates :author, presence: true
-
-    end
-
-    class Comment < ActiveRecord::Base
-
-      belongs_to :post
-      belongs_to :author
+      validates :first_name, presence: true
+      validates :last_name, presence: true
+      validates :email, presence: true
 
     end
 
-    class Author < ActiveRecord::Base
+    class Photo < ActiveRecord::Base
 
-      has_many :posts
+      has_one :contact
 
     end
 

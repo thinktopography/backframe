@@ -4,25 +4,18 @@ module Backframe
 
   module Fixtures
 
-    class PostQuery < Backframe::Query
+    class ContactQuery < Backframe::Query
 
       def filter(records, filters)
-        records = records.where(title: filters[:title]) if filters.key?(:title)
-        records = records.where(author_id: filters[:author_id]) if filters.key?(:author_id)
+        records = records.where(first_name: filters[:first_name]) if filters.key?(:first_name)
+        records = records.where(last_name: filters[:last_name]) if filters.key?(:last_name)
+        records = records.where(email: filters[:email]) if filters.key?(:email)
         records
       end
 
     end
 
-    class AuthorQuery < Backframe::Query
-
-      def filter(records, filters)
-        records
-      end
-
-    end
-
-    class CommentQuery < Backframe::Query
+    class PhotoQuery < Backframe::Query
 
       def filter(records, filters)
         records
