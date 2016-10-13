@@ -11,6 +11,27 @@ describe Backframe::Response do
     ]
   end
 
+  it 'handles success' do
+    actual = Backframe::Response.success({ text: 'test', content_type: 'text/plain' })
+    expected = { text: 'test', content_type: 'text/plain', status: 200 }
+    expect(actual).to eq(expected)
+  end
+
+  it 'handles failure' do
+    actual = Backframe::Response.failure('Application Error', 500)
+    expected = {
+      json: {
+        error: {
+          message: 'Application Error',
+          status: 500
+        }
+      },
+      content_type: 'application/json',
+      status: 500
+    }
+    expect(actual).to eq(expected)
+  end
+
   it 'renders error if no format provided' do
     actual = Backframe::Response.render(Backframe::Fixtures::Contact, { format: 'bat' })
     expected = {
@@ -65,14 +86,51 @@ describe Backframe::Response do
     }
     expect(actual).to eq(expected)
   end
-  # it 'renders default csv response' do
-  #   actual = Backframe::Response.index(@posts, { format: 'csv' })
-  #   expected = {
-  #     text: "id,title,body,author.id,author.name\n1,Post 1,<p>This is a post</p>,1,Greg Kops\n2,Post 2,<p>This is a another post</p>,1,Greg Kops\n3,Post 3,<p>This is a another post</p>,1,Greg Kops",
-  #     content_type: "text/plain",
-  #     status: 200
-  #   }
-  #   expect(actual).to eq(expected)
-  # end
+
+  it 'renders default csv response' do
+    actual = Backframe::Response.render(Backframe::Fixtures::Contact, { format: 'csv' })
+    expected = {
+      text: [
+        'id,first_name,last_name,email,photo.id,photo.path',
+        '1,Greg,Kops,greg@thinktopography.com,1,/images/greg.jpg',
+        '2,Megan,Pugh,megan@thinktopography.com,2,/images/megan.jpg',
+        '3,Kath,Tibbetts,kath@thinktopography.com,3,/images/kath.jpg',
+        '4,Armand,Zerilli,armand@thinktopography.com,4,/images/armand.jpg'
+      ].join("\n"),
+      content_type: "text/plain",
+      status: 200
+    }
+    expect(actual).to eq(expected)
+  end
+
+  it 'renders default tsv response' do
+    actual = Backframe::Response.render(Backframe::Fixtures::Contact, { format: 'tsv' })
+    expected = {
+      text: [
+        "id\tfirst_name\tlast_name\temail\tphoto.id\tphoto.path",
+        "1\tGreg\tKops\tgreg@thinktopography.com\t1\t/images/greg.jpg",
+        "2\tMegan\tPugh\tmegan@thinktopography.com\t2\t/images/megan.jpg",
+        "3\tKath\tTibbetts\tkath@thinktopography.com\t3\t/images/kath.jpg",
+        "4\tArmand\tZerilli\tarmand@thinktopography.com\t4\t/images/armand.jpg"
+      ].join("\n"),
+      content_type: "text/plain",
+      status: 200
+    }
+    expect(actual).to eq(expected)
+  end
+
+  it 'renders default xlsx response' do
+    actual = Backframe::Response.render(Backframe::Fixtures::Contact, { format: 'xlsx' })
+    expect(actual[:content_type]).to eq('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    expect(actual[:status]).to eq(200)
+    File.open('tmp.xlsx', 'w') { |file| file.write(actual[:text]) }
+    xlsx = Roo::Excelx.new('tmp.xlsx')
+    expect(xlsx.sheet(0).row(1)).to eq(["id", "first_name", "last_name", "email", "photo.id", "photo.path"])
+    expect(xlsx.sheet(0).row(2)).to eq(["1", "Greg", "Kops", "greg@thinktopography.com", "1", "/images/greg.jpg"])
+    expect(xlsx.sheet(0).row(3)).to eq(["2", "Megan", "Pugh", "megan@thinktopography.com", "2", "/images/megan.jpg"])
+    expect(xlsx.sheet(0).row(4)).to eq(["3", "Kath", "Tibbetts", "kath@thinktopography.com", "3", "/images/kath.jpg"])
+    expect(xlsx.sheet(0).row(5)).to eq(["4", "Armand", "Zerilli", "armand@thinktopography.com", "4", "/images/armand.jpg"])
+    File.unlink('tmp.xlsx')
+  end
 
 end

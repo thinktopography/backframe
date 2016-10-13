@@ -26,7 +26,7 @@ module Backframe
             data = Backframe::Response::Adapter::Csv.render(collection, fields, "\t")
             success(text: data, content_type: 'text/plain')
           elsif params[:format] == 'xlsx'
-            data = Backframe::Response::Adapter::Xml.render(collection, fields)
+            data = Backframe::Response::Adapter::Xlsx.render(collection, fields)
             success(text: data, content_type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
           else
             failure('Unknown Format', 404)
