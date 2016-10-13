@@ -13,10 +13,11 @@ module Backframe
           def render(collection, fields)
             output  = '<?xml version="1.0"?>'
             output += "<records>"
-            collection.each do |item|
+            collection.records.each do |item|
+              serialized = ActiveModelSerializers::SerializableResource.new(item).serializable_hash
               output += "<record>"
-              fields.each do |field|
-                value = Backframe::Record.get_value(item, field[:key])
+              fields.array.each do |field|
+                value = Backframe::Response::Record.get_value(serialized, field[:key])
                 output += "<#{field[:key]}>#{value}</#{field[:key]}>"
               end
               output += "</record>"

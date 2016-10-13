@@ -60,6 +60,7 @@ describe Backframe::Response::Adapter::Json do
       current_page: 1,
       total_pages: 2
     }
-    expect(actual).to eq(expected)  end
+    expect(actual).to eq(expected)
+  end
 
 end

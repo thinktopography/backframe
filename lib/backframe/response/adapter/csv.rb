@@ -10,17 +10,18 @@ module Backframe
 
         class << self
 
-          def render(collection, separator = ",")
+          def render(collection, fields, separator = ",")
             records = []
             labels = []
-            fields.each do |field|
+            fields.array.each do |field|
               labels << field[:label]
             end
             records << labels.join(separator)
-            collection.each do |item|
+            collection.records.each do |item|
+              serialized = ActiveModelSerializers::SerializableResource.new(item).serializable_hash
               record = []
-              fields.each do |field|
-                record << Backframe::Record.get_value(item, field[:key])
+              fields.array.each do |field|
+                record << Backframe::Response::Record.get_value(serialized, field[:key])
               end
               records << record.join(separator)
             end
