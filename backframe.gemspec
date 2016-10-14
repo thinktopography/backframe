@@ -11,7 +11,7 @@ Gem::Specification.new do |gem|
   gem.version       = Backframe::VERSION
   gem.summary       = 'backframe'
   gem.authors       = ['Greg Kops']
-  gem.files         = ["lib/*.rb"]
+  gem.files         = `git ls-files`.split($/)
   gem.license       = 'MIT'
   gem.executables   = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
