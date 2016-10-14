@@ -13,10 +13,10 @@ end
 
 desc "install the gem"
 task :install do
-  system "gem install backframe-#{imagecache::VERSION}.gem"
+  system "gem install backframe-#{backframe::VERSION}.gem"
 end
 
 desc "Build and release the gem"
 task :release => :build do
-  system "gem push backframe-#{imagecache::VERSION}.gem"
+  system "gem push backframe-#{backframe::VERSION}.gem"
 end

@@ -5,10 +5,14 @@ require 'backframe/version'
 
 Gem::Specification.new do |gem|
   gem.name          = 'backframe'
+  gem.email         = 'greg@thinktopography.com'
+  gem.description   = 'A collection of core objects for writing testable APIs'
+  gem.homepage      = 'https://github.com/thinktopography/backframe'
   gem.version       = Backframe::VERSION
   gem.summary       = 'backframe'
   gem.authors       = ['Greg Kops']
   gem.files         = ["lib/*.rb"]
+  gem.license       = 'MIT'
   gem.executables   = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
